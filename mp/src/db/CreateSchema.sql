@@ -1,16 +1,59 @@
+drop database omp;
+create database omp;
+use omp;
+
 create table CountryMaster(
-	countryCode INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(255)
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
 );
 
-create table CommonMaster(
-	commonCode INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`type` VARCHAR(255) NOT NULL,
+create table SiblingMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table GenderMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table BloodGroupMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table RHFactorMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table OccupationMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table ApprovalStatusMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table FormStatusMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table SelectionDecisionMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`value` VARCHAR(255) NOT NULL
+);
+
+create table TruthMaster(
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`value` VARCHAR(255) NOT NULL
 );
 
 create table BranchMaster(
-	branchCode INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(255) NOT NULL,
 	city VARCHAR(255) NOT NULL,
 	state VARCHAR(255) NOT NULL,
@@ -18,8 +61,9 @@ create table BranchMaster(
 	secretaryName VARCHAR(255) NOT NULL,
 	mobile VARCHAR(50),
 	email VARCHAR(255),
-	FOREIGN KEY (countryCode) REFERENCES CountryMaster (countryCode)
+	FOREIGN KEY (countryCode) REFERENCES CountryMaster (`code`)
 );
+
 
 CREATE TABLE Form(	
 	formNum INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -164,38 +208,63 @@ CREATE TABLE Form(
 	parentsSecretaryName VARCHAR(255),
 	parentsSecretaryEmail VARCHAR(255),
 	parentsSecretaryMobile VARCHAR(50),
-	FOREIGN KEY (formStatus) REFERENCES CommonMaster (commonCode),
+
+	FOREIGN KEY (formStatus) REFERENCES FormStatusMaster (`code`),
 	
-	FOREIGN KEY (gender) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (bloodGroup) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (rhFactor) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (occupation) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (fathersOccupation) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (mothersOccupation) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (selectionDecision) REFERENCES CommonMaster (commonCode),
+	FOREIGN KEY (gender) REFERENCES GenderMaster (`code`),
+	FOREIGN KEY (bloodGroup) REFERENCES BloodGroupMaster (`code`),
+	FOREIGN KEY (rhFactor) REFERENCES RHFactorMaster (`code`),
+	FOREIGN KEY (occupation) REFERENCES OccupationMaster (`code`),
+	FOREIGN KEY (fathersOccupation) REFERENCES OccupationMaster (`code`),
+	FOREIGN KEY (mothersOccupation) REFERENCES OccupationMaster (`code`),
+	FOREIGN KEY (selectionDecision) REFERENCES SelectionDecisionMaster (`code`),
 	
-	FOREIGN KEY (candidateSecretaryApproval) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (parentsSecretaryApproval) REFERENCES CommonMaster (commonCode),
+	FOREIGN KEY (candidateSecretaryApproval) REFERENCES ApprovalStatusMaster (`code`),
+	FOREIGN KEY (parentsSecretaryApproval) REFERENCES ApprovalStatusMaster (`code`),
 	
 	
-	FOREIGN KEY (nationality) REFERENCES CountryMaster (countryCode),
-	FOREIGN KEY (fathersNationality) REFERENCES CountryMaster (countryCode),
-	FOREIGN KEY (mothersNationality) REFERENCES CountryMaster (countryCode),
-	FOREIGN KEY (officeCountryCode) REFERENCES CountryMaster (countryCode),
-	FOREIGN KEY (parentsCountryCode) REFERENCES CountryMaster (countryCode),
+	FOREIGN KEY (nationality) REFERENCES CountryMaster (`code`),
+	FOREIGN KEY (fathersNationality) REFERENCES CountryMaster (`code`),
+	FOREIGN KEY (mothersNationality) REFERENCES CountryMaster (`code`),
+	FOREIGN KEY (officeCountryCode) REFERENCES CountryMaster (`code`),
+	FOREIGN KEY (parentsCountryCode) REFERENCES CountryMaster (`code`),
 	
-	FOREIGN KEY (parentsBranch) REFERENCES BranchMaster (branchCode),
-	FOREIGN KEY (candidateBranch) REFERENCES BranchMaster (branchCode),
+	FOREIGN KEY (parentsBranch) REFERENCES BranchMaster (`code`),
+	FOREIGN KEY (candidateBranch) REFERENCES BranchMaster (`code`),
 	
-	FOREIGN KEY (dBResident) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (attendSatsang) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (participateInSeva) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (vegetarian) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (teetotaler) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (paternalGrandFatherInitiated) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (paternalGrandMotherInitiated) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (fathersInitiated) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (maternalGrandFatherInitiated) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (maternalGeandMotherInitiated) REFERENCES CommonMaster (commonCode),
-	FOREIGN KEY (mothersInitiated) REFERENCES CommonMaster (commonCode)
+	FOREIGN KEY (dBResident) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (attendSatsang) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (participateInSeva) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (vegetarian) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (teetotaler) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (paternalGrandFatherInitiated) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (paternalGrandMotherInitiated) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (fathersInitiated) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (maternalGrandFatherInitiated) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (maternalGeandMotherInitiated) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (mothersInitiated) REFERENCES TruthMaster (`code`)
+);
+
+create table Sibling(
+	siblingId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	formNum INT NOT NULL,
+	`type` int NOT NULL,
+	dateOfBirth DATETIME NOT NULL,
+	maritalStatus int NOT NULL,
+	dateOfMarriage DATETIME NOT NULL,
+	throughMarriagePanchayat int NOT NULL,
+	registeredInMarriagePanchayat int NOT NULL,
+	satsangiFamily int NOT NULL,
+	reasons VARCHAR(255) NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	initiatedStatus int NOT NULL,
+	occupation int NOT NULL,
+	FOREIGN KEY (`type`) REFERENCES SiblingMaster (`code`),
+	FOREIGN KEY (formNum) REFERENCES Form (formNum),
+	FOREIGN KEY (maritalStatus) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (throughMarriagePanchayat) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (registeredInMarriagePanchayat) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (satsangiFamily) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (initiatedStatus) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (occupation) REFERENCES OccupationMaster (`code`)
 );

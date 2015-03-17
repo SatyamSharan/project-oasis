@@ -17,29 +17,25 @@ public class Country {
 	public Country() {
 		super();
 	}
+	public Country(int code) {
+		this.code=code;
+	}
 	
-	public Country(int countryCode) {
-		this.countryCode=countryCode;
-	}
-
-	private int countryCode;
-	private String name;
-
+	private int code=103;
+	private String value;
+	
 	@Id
-	public int getCountryCode() {
-		return countryCode;
+	public int getCode() {
+		return code;
 	}
-
-	public void setCountryCode(int countryCode) {
-		this.countryCode = countryCode;
+	public void setCode(int code) {
+		this.code = code;
 	}
-
-	public String getName() {
-		return name;
+	public String getValue() {
+		return value;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }

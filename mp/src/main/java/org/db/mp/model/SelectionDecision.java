@@ -7,51 +7,37 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @author Satyam Sharan <satyam.sharan@hotmail.com>
  *
  */
 @Entity
-@Table(name = "CommonMaster")
-@DynamicUpdate
+@Table(name = "SelectionDecisionMaster")
 public class SelectionDecision {
 	public SelectionDecision() {
 		super();
 	}
+	public SelectionDecision(int code) {
+		this.code=code;
+	}
 	
-	public SelectionDecision(int commonCode) {
-		this.commonCode=commonCode;
-	}
-
-	private int commonCode;
+	
+	private int code=1;
 	private String value;
-	private String type = "SELECTION_DECISION";
-
+	
 	@Id
-	public int getCommonCode() {
-		return commonCode;
+	public int getCode() {
+		return code;
 	}
-
-	public void setCommonCode(int commonCode) {
-		this.commonCode = commonCode;
+	public void setCode(int code) {
+		this.code = code;
 	}
-
 	public String getValue() {
 		return value;
 	}
-
 	public void setValue(String value) {
 		this.value = value;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 }

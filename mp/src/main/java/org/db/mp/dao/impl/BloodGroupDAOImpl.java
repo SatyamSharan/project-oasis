@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 public class BloodGroupDAOImpl implements BloodGroupDAO{
 	private SessionFactory sessionFactory;
@@ -30,7 +29,6 @@ public class BloodGroupDAOImpl implements BloodGroupDAO{
 	public List<BloodGroup> list() {
 		Session session = this.sessionFactory.openSession();
 		Criteria cr = session.createCriteria(BloodGroup.class);
-		cr.add(Restrictions.eq("type","BLOOD_GROUP"));
 		@SuppressWarnings("unchecked")
 		List<BloodGroup> bloodGroupList = cr.list();
 		session.close();

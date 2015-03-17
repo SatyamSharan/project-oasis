@@ -13,24 +13,24 @@ import org.db.mp.dao.BloodGroupDAO;
 import org.db.mp.dao.BranchDAO;
 import org.db.mp.dao.CountryDAO;
 import org.db.mp.dao.FormDAO;
+import org.db.mp.dao.FormStatusDAO;
 import org.db.mp.dao.GenderDAO;
 import org.db.mp.dao.OccupationDAO;
 import org.db.mp.dao.RHFactorDAO;
 import org.db.mp.dao.SelectionDecisionDAO;
 import org.db.mp.dao.SiblingDAO;
-import org.db.mp.dao.StatusDAO;
 import org.db.mp.dao.TruthDAO;
 import org.db.mp.dao.impl.ApprovalStatusDAOImpl;
 import org.db.mp.dao.impl.BloodGroupDAOImpl;
 import org.db.mp.dao.impl.BranchDAOImpl;
 import org.db.mp.dao.impl.CountryDAOImpl;
 import org.db.mp.dao.impl.FormDAOImpl;
+import org.db.mp.dao.impl.FormStatusDAOImpl;
 import org.db.mp.dao.impl.GenderDAOImpl;
 import org.db.mp.dao.impl.OccupationDAOImpl;
 import org.db.mp.dao.impl.RHFactorDAOImpl;
 import org.db.mp.dao.impl.SelectionDecisionDAOImpl;
 import org.db.mp.dao.impl.SiblingDAOImpl;
-import org.db.mp.dao.impl.StatusDAOImpl;
 import org.db.mp.dao.impl.TruthDAOImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,8 +156,8 @@ public class AppConfig {
 	}
 
 	@Bean
-	public StatusDAO statusDAO() {
-		StatusDAO statusDAO = new StatusDAOImpl();
+	public FormStatusDAO statusDAO() {
+		FormStatusDAO statusDAO = new FormStatusDAOImpl();
 		statusDAO.setSessionFactory(sessionFactoryBean());
 		return statusDAO;
 	}

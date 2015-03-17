@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 public class ApprovalStatusDAOImpl implements ApprovalStatusDAO {
 	private SessionFactory sessionFactory;
@@ -32,7 +31,6 @@ public class ApprovalStatusDAOImpl implements ApprovalStatusDAO {
 	public List<ApprovalStatus> list() {
 		Session session = this.sessionFactory.openSession();
 		Criteria cr = session.createCriteria(ApprovalStatus.class);
-		cr.add(Restrictions.eq("type", "APPROVAL_STATUS"));
 		@SuppressWarnings("unchecked")
 		List<ApprovalStatus> approvalStatusList = cr.list();
 		session.close();

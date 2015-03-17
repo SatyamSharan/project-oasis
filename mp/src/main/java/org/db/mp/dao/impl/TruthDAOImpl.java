@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 public class TruthDAOImpl implements TruthDAO{
 	private SessionFactory sessionFactory;
@@ -30,7 +29,6 @@ public class TruthDAOImpl implements TruthDAO{
 	public List<Truth> list() {
 		Session session = this.sessionFactory.openSession();
 		Criteria cr = session.createCriteria(Truth.class);
-		cr.add(Restrictions.eq("type","TRUTH"));
 		@SuppressWarnings("unchecked")
 		List<Truth> truthList = cr.list();
 		session.close();

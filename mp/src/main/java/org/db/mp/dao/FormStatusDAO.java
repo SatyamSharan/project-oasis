@@ -2,11 +2,11 @@ package org.db.mp.dao;
 
 import java.util.List;
 
-import org.db.mp.model.Status;
+import org.db.mp.model.FormStatus;
 import org.hibernate.SessionFactory;
 
-public interface StatusDAO {
+public interface FormStatusDAO {
 	public void setSessionFactory(SessionFactory sessionFactory);
-	public void save(Status status);
-	public List<Status> list();
+	public void save(FormStatus status);
+	public List<FormStatus> list();
 }

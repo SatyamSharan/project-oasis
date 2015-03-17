@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 public class GenderDAOImpl implements GenderDAO{
 	private SessionFactory sessionFactory;
@@ -30,7 +29,6 @@ public class GenderDAOImpl implements GenderDAO{
 	public List<Gender> list() {
 		Session session = this.sessionFactory.openSession();
 		Criteria cr = session.createCriteria(Gender.class);
-		cr.add(Restrictions.eq("type","GENDER"));
 		@SuppressWarnings("unchecked")
 		List<Gender> genderList = cr.list();
 		session.close();

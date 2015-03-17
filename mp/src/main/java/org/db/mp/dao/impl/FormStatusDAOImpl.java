@@ -2,15 +2,14 @@ package org.db.mp.dao.impl;
 
 import java.util.List;
 
-import org.db.mp.dao.StatusDAO;
-import org.db.mp.model.Status;
+import org.db.mp.dao.FormStatusDAO;
+import org.db.mp.model.FormStatus;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
-public class StatusDAOImpl implements StatusDAO{
+public class FormStatusDAOImpl implements FormStatusDAO{
 	private SessionFactory sessionFactory;
 	
 	@Override
@@ -18,7 +17,7 @@ public class StatusDAOImpl implements StatusDAO{
 		this.sessionFactory = sessionFactory;
 	}
 	@Override
-	public void save(Status status) {
+	public void save(FormStatus status) {
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.persist(status);
@@ -27,12 +26,11 @@ public class StatusDAOImpl implements StatusDAO{
 	}
 
 	@Override
-	public List<Status> list() {
+	public List<FormStatus> list() {
 		Session session = this.sessionFactory.openSession();
-		Criteria cr = session.createCriteria(Status.class);
-		cr.add(Restrictions.eq("type","STATUS"));
+		Criteria cr = session.createCriteria(FormStatus.class);
 		@SuppressWarnings("unchecked")
-		List<Status> statusList = cr.list();
+		List<FormStatus> statusList = cr.list();
 		session.close();
 		return statusList;
 	}

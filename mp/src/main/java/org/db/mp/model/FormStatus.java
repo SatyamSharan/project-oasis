@@ -12,12 +12,12 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "TruthMaster")
-public class Truth {
-	public Truth() {
+@Table(name = "FormStatusMaster")
+public class FormStatus {
+	public FormStatus() {
 		super();
 	}
-	public Truth(int code) {
+	public FormStatus(int code) {
 		this.code=code;
 	}
 	
@@ -36,5 +36,6 @@ public class Truth {
 	}
 	public void setValue(String value) {
 		this.value = value;
-	}	
+	}
+
 }

@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 public class RHFactorDAOImpl implements RHFactorDAO{
 	private SessionFactory sessionFactory;
@@ -30,7 +29,6 @@ public class RHFactorDAOImpl implements RHFactorDAO{
 	public List<RHFactor> list() {
 		Session session = this.sessionFactory.openSession();
 		Criteria cr = session.createCriteria(RHFactor.class);
-		cr.add(Restrictions.eq("type","RH_FACTOR"));
 		@SuppressWarnings("unchecked")
 		List<RHFactor> rHFactorList = cr.list();
 		session.close();

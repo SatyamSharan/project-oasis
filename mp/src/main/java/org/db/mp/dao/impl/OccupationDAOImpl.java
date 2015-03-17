@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 public class OccupationDAOImpl implements OccupationDAO{
 	private SessionFactory sessionFactory;
@@ -30,7 +29,6 @@ public class OccupationDAOImpl implements OccupationDAO{
 	public List<Occupation> list() {
 		Session session = this.sessionFactory.openSession();
 		Criteria cr = session.createCriteria(Occupation.class);
-		cr.add(Restrictions.eq("type","OCCUPATION"));
 		@SuppressWarnings("unchecked")
 		List<Occupation> occupationList = cr.list();
 		session.close();
