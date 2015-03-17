@@ -9,4 +9,5 @@ public interface SiblingDAO {
 	public void setSessionFactory(SessionFactory sessionFactory);
 	public void save(Sibling sibling);
 	public List<Sibling> list();
+	public void save(List<Sibling> siblings);
 }

@@ -3,8 +3,10 @@
  */
 package org.db.mp.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,9 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author Satyam Sharan <satyam.sharan@hotmail.com>
@@ -23,7 +27,7 @@ import javax.persistence.Transient;
  */
 @Entity
 public class Form {
-
+	static Logger logger = Logger.getLogger("mp");
 	public Form() {
 		super();
 	}
@@ -36,6 +40,7 @@ public class Form {
 
 	private String name;
 	private Date dateOfBirth;
+	private Truth initiatedStatus;
 	private Date dateOfInitiation;
 	
 	//Many to One
@@ -45,7 +50,7 @@ public class Form {
 	private String health;
 	private int height;
 	private int weight;
-	private String eductionalQualification;
+	private String educationalQualification;
 	
 	//Many to one
 	private Gender gender;
@@ -214,6 +219,8 @@ public class Form {
 	//Many to one
 	private Branch parentsBranch;
 	
+	private String parentsNOC;
+	
 	//Many to one
 	private ApprovalStatus parentsSecretaryApproval;
 	
@@ -269,6 +276,16 @@ public class Form {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="initiatedStatus")
+	public Truth getInitiatedStatus() {
+		return initiatedStatus;
+	}
+
+	public void setInitiatedStatus(Truth initiatedStatus) {
+		this.initiatedStatus = initiatedStatus;
+	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfInitiation() {
@@ -313,12 +330,12 @@ public class Form {
 		this.weight = weight;
 	}
 
-	public String getEductionalQualification() {
-		return eductionalQualification;
+	public String getEducationalQualification() {
+		return educationalQualification;
 	}
 
-	public void setEductionalQualification(String eductionalQualification) {
-		this.eductionalQualification = eductionalQualification;
+	public void setEducationalQualification(String educationalQualification) {
+		this.educationalQualification = educationalQualification;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -1204,6 +1221,14 @@ public class Form {
 	public void setParentsBranch(Branch parentsBranch) {
 		this.parentsBranch = parentsBranch;
 	}
+	
+	public String getParentsNOC() {
+		return parentsNOC;
+	}
+
+	public void setParentsNOC(String parentsNOC) {
+		this.parentsNOC = parentsNOC;
+	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="parentsSecretaryApproval")
@@ -1238,8 +1263,8 @@ public class Form {
 	public void setParentsSecretaryMobile(String parentsSecretaryMobile) {
 		this.parentsSecretaryMobile = parentsSecretaryMobile;
 	}
-
-	@Transient
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "form")
 	public List<Sibling> getSiblings() {
 		return siblings;
 	}
@@ -1250,44 +1275,46 @@ public class Form {
 	
 
 	public static Form getRandomForm(){
+		int random=new Random().nextInt(1000);
 		Form form = new Form();
 		form.setDateCreated(new Date());
-		form.setFormStatus(new FormStatus());
-		form.setName("Test Name");
+		form.setFormStatus(new FormStatus(random%3+1));
+		form.setInitiatedStatus(new Truth(random%2+1));
+		form.setName("Test Name: "+ random);
 		form.setDateOfBirth(new Date());
 		form.setDateOfInitiation(new Date());
 		form.setNationality(new Country());
-		form.setEductionalQualification("Graduate");
-		form.setGender(new Gender());
-		form.setBloodGroup(new BloodGroup());
-		form.setRhFactor(new RHFactor());
-		form.setOccupation(new Occupation());
-		form.setdBResident(new Truth());
+		form.setEducationalQualification("Graduate");
+		form.setGender(new Gender(random%2+1));
+		form.setBloodGroup(new BloodGroup(random%3+1));
+		form.setRhFactor(new RHFactor(random%2+1));
+		form.setOccupation(new Occupation(random%5+1));
+		form.setdBResident(new Truth(random%2+1));
 		form.setOfficeCountry(new Country());
-		form.setFathersOccupation(new Occupation());
-		form.setMothersOccupation(new Occupation());
-		form.setSelectionDecision(new SelectionDecision());
+		form.setFathersOccupation(new Occupation(random%5+1));
+		form.setMothersOccupation(new Occupation(random%5+1));
+		form.setSelectionDecision(new SelectionDecision(random%3+1));
 		form.setCandidateBranch(new Branch(1));
-		form.setCandidateSecretaryApproval(new ApprovalStatus());
+		form.setCandidateSecretaryApproval(new ApprovalStatus(random%3+1));
 		form.setParentsBranch(new Branch(1));
-		form.setParentsSecretaryApproval(new ApprovalStatus());
+		form.setParentsSecretaryApproval(new ApprovalStatus(random%3+1));
 		form.setDateOfLastDBVisit(new Date());
-		form.setAttendSatsang(new Truth());
-		form.setParticipateInSeva(new Truth());
-		form.setVegetarian(new Truth());
-		form.setTeetotaler(new Truth());
-		form.setFathersName("Father");
-		form.setPaternalGrandFathersName("Paternal Grand Father");
-		form.setFathersInitiated(new Truth());
+		form.setAttendSatsang(new Truth(random%2+1));
+		form.setParticipateInSeva(new Truth(random%2+1));
+		form.setVegetarian(new Truth(random%2+1));
+		form.setTeetotaler(new Truth(random%2+1));
+		form.setFathersName("Father: "+random);
+		form.setPaternalGrandFathersName("Paternal Grand Father: "+random);
+		form.setFathersInitiated(new Truth(random%2+1));
 		form.setFathersNationality(new Country());
-		form.setFathersSatsangSevaDetails("Satsang and Seva Details");
-		form.setFathersLastZonalAttended("Basnat 2015");
-		form.setMothersName("Mother");
-		form.setMaternalGrandFathersName("Maternal Grand Father");
-		form.setMothersInitiated(new Truth());
+		form.setFathersSatsangSevaDetails("Satsang and Seva Details: "+random);
+		form.setFathersLastZonalAttended("Basnat 2015: "+random);
+		form.setMothersName("Mother: "+random);
+		form.setMaternalGrandFathersName("Maternal Grand Father: "+random);
+		form.setMothersInitiated(new Truth(random%2+1));
 		form.setMothersNationality(new Country());
-		form.setMothersSatsangSevaDetails("Satsang and Seva Details");
-		form.setMothersLastZonalAttended("Basnat 2015");
+		form.setMothersSatsangSevaDetails("Satsang and Seva Details: "+random);
+		form.setMothersLastZonalAttended("Basnat 2015: "+random);
 		
 		form.setParentsBuildingNumber("Flat 207");
 		form.setParentsStreet("Pocket 4, Sector 12");
@@ -1296,6 +1323,15 @@ public class Form {
 		form.setParentsDistrict("South West Delhi");
 		form.setParentsState("Delhi");
 		form.setParentsCountry(new Country());
+		
+		List<Sibling> siblings = new ArrayList<Sibling>();
+		
+		for(int i=0;i<(2+(new Random().nextInt(5)));i++){
+			siblings.add(Sibling.getRandomSibling());
+		}
+		
+		form.setSiblings(siblings);
+		logger.info("Number of Siblings: " + siblings.size());
 		return form;
 	}
 	

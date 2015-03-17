@@ -34,5 +34,13 @@ public class SiblingDAOImpl implements SiblingDAO{
 		session.close();
 		return siblingList;
 	}
+	@Override
+	public void save(List<Sibling> siblings) {
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		for(Sibling sibling:siblings)session.persist(sibling);
+		tx.commit();
+		session.close();
+	}
 
 }

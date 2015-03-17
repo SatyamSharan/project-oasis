@@ -72,12 +72,13 @@ CREATE TABLE Form(
 	
 	name VARCHAR(255) NOT NULL,
 	dateOfBirth DATETIME NOT NULL,
+	initiatedStatus int NOT NULL,
 	dateOfInitiation DATETIME NOT NULL,
 	nationality INT NOT NULL,
 	health VARCHAR(255),
 	height INT,
 	weight INT,
-	eductionalQualification VARCHAR(255) NOT NULL,
+	educationalQualification VARCHAR(255) NOT NULL,
 	gender INT NOT NULL,
 	bloodGroup INT,
 	rhFactor INT ,
@@ -204,6 +205,8 @@ CREATE TABLE Form(
 	parentsNameOfSignatory VARCHAR(255),
 	
 	parentsBranch INT,
+	parentsNOC VARCHAR(255),
+
 	parentsSecretaryApproval INT,
 	parentsSecretaryName VARCHAR(255),
 	parentsSecretaryEmail VARCHAR(255),
@@ -232,6 +235,7 @@ CREATE TABLE Form(
 	FOREIGN KEY (parentsBranch) REFERENCES BranchMaster (`code`),
 	FOREIGN KEY (candidateBranch) REFERENCES BranchMaster (`code`),
 	
+	FOREIGN KEY (initiatedStatus) REFERENCES TruthMaster (`code`),
 	FOREIGN KEY (dBResident) REFERENCES TruthMaster (`code`),
 	FOREIGN KEY (attendSatsang) REFERENCES TruthMaster (`code`),
 	FOREIGN KEY (participateInSeva) REFERENCES TruthMaster (`code`),
