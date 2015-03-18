@@ -8,8 +8,10 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.db.mp.dao.FormADAO;
 import org.db.mp.dao.FormDAO;
 import org.db.mp.dao.SiblingDAO;
+import org.db.mp.dao.impl.FormADAOImpl;
 import org.db.mp.dao.impl.FormDAOImpl;
 import org.db.mp.dao.impl.SiblingDAOImpl;
 import org.hibernate.SessionFactory;
@@ -70,6 +72,13 @@ public class AppConfig {
 		FormDAO formDAO = new FormDAOImpl();
 		formDAO.setSessionFactory(sessionFactoryBean());
 		return formDAO;
+	}
+	
+	@Bean
+	public FormADAO formADAO() {
+		FormADAO formADAO = new FormADAOImpl();
+		formADAO.setSessionFactory(sessionFactoryBean());
+		return formADAO;
 	}
 	
 	@Bean

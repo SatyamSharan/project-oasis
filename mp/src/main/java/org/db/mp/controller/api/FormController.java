@@ -3,10 +3,10 @@
  */
 package org.db.mp.controller.api;
 
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.db.mp.dao.FormDAO;
+import org.db.mp.json.CandidateJSON;
 import org.db.mp.model.Form;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +29,12 @@ static Logger logger = Logger.getLogger("mp");
 	FormDAO formDAO;
 	
 	@RequestMapping(value="{formNum}", method = RequestMethod.GET)
-	public @ResponseBody Form getFormInJSON(@PathVariable String formNum) {
+	public @ResponseBody CandidateJSON getFormInJSON(@PathVariable int formNum) {
 		//FormUtils formUtils = new FormUtils();
 		
-		List<Form> forms=formDAO.get(Integer.parseInt(formNum));
+		Form form=formDAO.get(formNum);
 		logger.info("FormNum: "+formNum);
-		return forms.get(0);
+		CandidateJSON candidateJSON = new CandidateJSON(form);
+		return candidateJSON ;
 	}
 }

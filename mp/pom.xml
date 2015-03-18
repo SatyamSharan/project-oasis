@@ -92,11 +92,12 @@
 			<version>${servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		 <dependency>  
-            <groupId>jstl</groupId>  
-            <artifactId>jstl</artifactId>  
-            <version>${jstl.version}</version>  
-        </dependency> 
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>

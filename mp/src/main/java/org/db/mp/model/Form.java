@@ -20,6 +20,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.apache.log4j.Logger;
+import org.db.mp.json.CandidateJSON;
+import org.hibernate.annotations.Type;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author Satyam Sharan <satyam.sharan@hotmail.com>
@@ -27,43 +30,44 @@ import org.apache.log4j.Logger;
  */
 @Entity
 public class Form {
-	static Logger logger = Logger.getLogger("mp");
+	private static Logger logger = Logger.getLogger("mp");
+
 	public Form() {
 		super();
 	}
-	
+
+	public Form(CandidateJSON candidateJSON) {
+		BeanUtils.copyProperties(candidateJSON, this);
+	}
+
 	private int formNum;
 	private Date dateCreated;
-	
-	//Many to One
+
+	// Many to One
 	private FormStatus formStatus;
 
 	private String name;
 	private Date dateOfBirth;
-	private Truth initiatedStatus;
+	private boolean initiatedStatus;
 	private Date dateOfInitiation;
-	
-	//Many to One
+
+	// Many to One
 	private Country nationality;
-	
-	
+
 	private String health;
 	private int height;
 	private int weight;
 	private String educationalQualification;
-	
-	//Many to one
-	private Gender gender;
-	
-	//Many to one
+
+	// Many to one
+	private boolean gender;
+
+	// Many to one
 	private BloodGroup bloodGroup;
-	
-	//Many to one
-	private RHFactor rhFactor;
-	
-	//Many to one
+
+	// Many to one
 	private Occupation occupation;
-	
+
 	private String nameOfEmployer;
 	private Date dateOfJoining;
 	private String designation;
@@ -77,57 +81,57 @@ public class Form {
 	private String officeCity;
 	private String officeDistrict;
 	private String officeState;
-	
-	//Many to one
+
+	// Many to one
 	private Country officeCountry;
 
 	private Date completionOfEducation;
 
-	//Many to one
-	private Truth dBResident;
+	// Many to one
+	private boolean dBResident;
 	private Date dateOfLastDBVisit;
-	
-	//Many to one
-	private Truth attendSatsang;
-	
-	//Many to one
-	private Truth participateInSeva;
+
+	// Many to one
+	private boolean attendSatsang;
+
+	// Many to one
+	private boolean participateInSeva;
 	private String sevaDetails;
 
-	//Many to one
-	private Truth vegetarian;
-	
-	//Many to one
-	private Truth teetotaler;
+	// Many to one
+	private boolean vegetarian;
+
+	// Many to one
+	private boolean teetotaler;
 
 	private String fathersName;
 	private String paternalGrandFathersName;
-	
-	//Many to one
-	private Truth paternalGrandFatherInitiated;
+
+	// Many to one
+	private boolean paternalGrandFatherInitiated;
 	private String paternalGrandMothersName;
-	
-	//Many to one
-	private Truth paternalGrandMotherInitiated;
-	
-	//Many to one
+
+	// Many to one
+	private boolean paternalGrandMotherInitiated;
+
+	// Many to one
 	private Occupation fathersOccupation;
-	
+
 	private String fathersDesignation;
 	private String fathersDepartment;
 	private String fathersPlace;
 	private int fathersMonthlyIncome;
 	private String fathersAssetDetails;
-	
-	//Many to one
-	private Truth fathersInitiated;
-	
+
+	// Many to one
+	private boolean fathersInitiated;
+
 	private String fathersUid;
 	private String fathersPlaceOfInitiation;
 	private Date fathersDateOfFirstInitiation;
 	private Date fathersDateOfSecondInitiation;
-	
-	//Many to one
+
+	// Many to one
 	private Country fathersNationality;
 	private String fathersEmail;
 	private String fathersMobile;
@@ -139,31 +143,30 @@ public class Form {
 
 	private String mothersName;
 	private String maternalGrandFathersName;
-	
-	//Many to one
-	private Truth maternalGrandFatherInitiated;
+
+	// Many to one
+	private boolean maternalGrandFatherInitiated;
 	private String maternalGrandMothersName;
-	
-	//Many to one
-	private Truth maternalGeandMotherInitiated;
-	
-	//Many to one
+
+	// Many to one
+	private boolean maternalGeandMotherInitiated;
+
+	// Many to one
 	private Occupation mothersOccupation;
 	private String mothersDesignation;
 	private String mothersDepartment;
 	private String mothersPlace;
 	private int mothersMonthlyIncome;
 	private String mothersAssetDetails;
-	
-	//Many to one
-	private Truth mothersInitiated;
+
+	// Many to one
+	private boolean mothersInitiated;
 	private String mothersUid;
 	private String mothersPlaceOfInitiation;
 	private Date mothersDateOfFirstInitiation;
 	private Date mothersDateOfSecondInitiation;
-	
-	
-	//Many to one
+
+	// Many to one
 	private Country mothersNationality;
 	private String mothersEmail;
 	private String mothersMobile;
@@ -179,17 +182,17 @@ public class Form {
 	private String parentsCity;
 	private String parentsDistrict;
 	private String parentsState;
-	
-	//Many to one
+
+	// Many to one
 	private Country parentsCountry;
 
-	private int preferedSpouseAge;
+	private Date preferedSpouseDOB;
 	private String preferedSpouseQualification;
 	private String preferedSpouseOccupation;
 	private String preferedSpousePersonality;
 	private Date preferedTimeScheduleForMarriage;
-	
-	//Many to one
+
+	// Many to one
 	private SelectionDecision selectionDecision;
 
 	private int candidateBranchAttendance;
@@ -216,21 +219,20 @@ public class Form {
 	private Date parentsDateOfSignature;
 	private String parentsNameOfSignatory;
 
-	//Many to one
+	// Many to one
 	private Branch parentsBranch;
-	
+
 	private String parentsNOC;
-	
-	//Many to one
+
+	// Many to one
 	private ApprovalStatus parentsSecretaryApproval;
-	
+
 	private String parentsSecretaryName;
 	private String parentsSecretaryEmail;
 	private String parentsSecretaryMobile;
 
 	private List<Sibling> siblings;
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getFormNum() {
@@ -251,7 +253,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="formStatus")
+	@JoinColumn(name = "formStatus")
 	public FormStatus getFormStatus() {
 		return formStatus;
 	}
@@ -276,14 +278,13 @@ public class Form {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="initiatedStatus")
-	public Truth getInitiatedStatus() {
+
+	@Type(type = "yes_no")
+	public boolean isInitiatedStatus() {
 		return initiatedStatus;
 	}
 
-	public void setInitiatedStatus(Truth initiatedStatus) {
+	public void setInitiatedStatus(boolean initiatedStatus) {
 		this.initiatedStatus = initiatedStatus;
 	}
 
@@ -297,7 +298,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="nationality")
+	@JoinColumn(name = "nationality")
 	public Country getNationality() {
 		return nationality;
 	}
@@ -338,18 +339,17 @@ public class Form {
 		this.educationalQualification = educationalQualification;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="gender")
-	public Gender getGender() {
+	@Type(type = "yes_no")
+	public boolean isGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="bloodGroup")
+	@JoinColumn(name = "bloodGroup")
 	public BloodGroup getBloodGroup() {
 		return bloodGroup;
 	}
@@ -359,17 +359,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="rhFactor")
-	public RHFactor getRhFactor() {
-		return rhFactor;
-	}
-
-	public void setRhFactor(RHFactor rhFactor) {
-		this.rhFactor = rhFactor;
-	}
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="occupation")
+	@JoinColumn(name = "occupation")
 	public Occupation getOccupation() {
 		return occupation;
 	}
@@ -476,7 +466,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="officeCountryCode")
+	@JoinColumn(name = "officeCountryCode")
 	public Country getOfficeCountry() {
 		return officeCountry;
 	}
@@ -494,13 +484,12 @@ public class Form {
 		this.completionOfEducation = completionOfEducation;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="dBResident")
-	public Truth getdBResident() {
+	@Type(type = "yes_no")
+	public boolean isdBResident() {
 		return dBResident;
 	}
 
-	public void setdBResident(Truth dBResident) {
+	public void setdBResident(boolean dBResident) {
 		this.dBResident = dBResident;
 	}
 
@@ -513,23 +502,21 @@ public class Form {
 		this.dateOfLastDBVisit = dateOfLastDBVisit;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="attendSatsang")
-	public Truth getAttendSatsang() {
+	@Type(type = "yes_no")
+	public boolean isAttendSatsang() {
 		return attendSatsang;
 	}
 
-	public void setAttendSatsang(Truth attendSatsang) {
+	public void setAttendSatsang(boolean attendSatsang) {
 		this.attendSatsang = attendSatsang;
 	}
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="participateInSeva")
-	public Truth getParticipateInSeva() {
+
+	@Type(type = "yes_no")
+	public boolean isParticipateInSeva() {
 		return participateInSeva;
 	}
 
-	public void setParticipateInSeva(Truth participateInSeva) {
+	public void setParticipateInSeva(boolean participateInSeva) {
 		this.participateInSeva = participateInSeva;
 	}
 
@@ -541,23 +528,21 @@ public class Form {
 		this.sevaDetails = sevaDetails;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="vegetarian")
-	public Truth getVegetarian() {
+	@Type(type = "yes_no")
+	public boolean isVegetarian() {
 		return vegetarian;
 	}
 
-	public void setVegetarian(Truth vegetarian) {
+	public void setVegetarian(boolean vegetarian) {
 		this.vegetarian = vegetarian;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="teetotaler")
-	public Truth getTeetotaler() {
+	@Type(type = "yes_no")
+	public boolean isTeetotaler() {
 		return teetotaler;
 	}
 
-	public void setTeetotaler(Truth teetotaler) {
+	public void setTeetotaler(boolean teetotaler) {
 		this.teetotaler = teetotaler;
 	}
 
@@ -577,13 +562,12 @@ public class Form {
 		this.paternalGrandFathersName = paternalGrandFathersName;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="paternalGrandFatherInitiated")
-	public Truth getPaternalGrandFatherInitiated() {
+	@Type(type = "yes_no")
+	public boolean isPaternalGrandFatherInitiated() {
 		return paternalGrandFatherInitiated;
 	}
 
-	public void setPaternalGrandFatherInitiated(Truth paternalGrandFatherInitiated) {
+	public void setPaternalGrandFatherInitiated(boolean paternalGrandFatherInitiated) {
 		this.paternalGrandFatherInitiated = paternalGrandFatherInitiated;
 	}
 
@@ -595,18 +579,17 @@ public class Form {
 		this.paternalGrandMothersName = paternalGrandMothersName;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="paternalGrandMotherInitiated")
-	public Truth getPaternalGrandMotherInitiated() {
+	@Type(type = "yes_no")
+	public boolean isPaternalGrandMotherInitiated() {
 		return paternalGrandMotherInitiated;
 	}
 
-	public void setPaternalGrandMotherInitiated(Truth paternalGrandMotherInitiated) {
+	public void setPaternalGrandMotherInitiated(boolean paternalGrandMotherInitiated) {
 		this.paternalGrandMotherInitiated = paternalGrandMotherInitiated;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="fathersOccupation")
+	@JoinColumn(name = "fathersOccupation")
 	public Occupation getFathersOccupation() {
 		return fathersOccupation;
 	}
@@ -655,13 +638,12 @@ public class Form {
 		this.fathersAssetDetails = fathersAssetDetails;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="fathersInitiated")
-	public Truth getFathersInitiated() {
+	@Type(type = "yes_no")
+	public boolean isFathersInitiated() {
 		return fathersInitiated;
 	}
 
-	public void setFathersInitiated(Truth fathersInitiated) {
+	public void setFathersInitiated(boolean fathersInitiated) {
 		this.fathersInitiated = fathersInitiated;
 	}
 
@@ -700,7 +682,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="fathersNationality")
+	@JoinColumn(name = "fathersNationality")
 	public Country getFathersNationality() {
 		return fathersNationality;
 	}
@@ -773,13 +755,12 @@ public class Form {
 		this.maternalGrandFathersName = maternalGrandFathersName;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="maternalGrandFatherInitiated")
-	public Truth getMaternalGrandFatherInitiated() {
+	@Type(type = "yes_no")
+	public boolean isMaternalGrandFatherInitiated() {
 		return maternalGrandFatherInitiated;
 	}
 
-	public void setMaternalGrandFatherInitiated(Truth maternalGrandFatherInitiated) {
+	public void setMaternalGrandFatherInitiated(boolean maternalGrandFatherInitiated) {
 		this.maternalGrandFatherInitiated = maternalGrandFatherInitiated;
 	}
 
@@ -791,18 +772,17 @@ public class Form {
 		this.maternalGrandMothersName = maternalGrandMothersName;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="maternalGeandMotherInitiated")
-	public Truth getMaternalGeandMotherInitiated() {
+	@Type(type = "yes_no")
+	public boolean isMaternalGeandMotherInitiated() {
 		return maternalGeandMotherInitiated;
 	}
 
-	public void setMaternalGeandMotherInitiated(Truth maternalGeandMotherInitiated) {
+	public void setMaternalGeandMotherInitiated(boolean maternalGeandMotherInitiated) {
 		this.maternalGeandMotherInitiated = maternalGeandMotherInitiated;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="mothersOccupation")
+	@JoinColumn(name = "mothersOccupation")
 	public Occupation getMothersOccupation() {
 		return mothersOccupation;
 	}
@@ -851,13 +831,12 @@ public class Form {
 		this.mothersAssetDetails = mothersAssetDetails;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="mothersInitiated")
-	public Truth getMothersInitiated() {
+	@Type(type = "yes_no")
+	public boolean isMothersInitiated() {
 		return mothersInitiated;
 	}
 
-	public void setMothersInitiated(Truth mothersInitiated) {
+	public void setMothersInitiated(boolean mothersInitiated) {
 		this.mothersInitiated = mothersInitiated;
 	}
 
@@ -896,7 +875,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="mothersNationality")
+	@JoinColumn(name = "mothersNationality")
 	public Country getMothersNationality() {
 		return mothersNationality;
 	}
@@ -1002,7 +981,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="parentsCountryCode")
+	@JoinColumn(name = "parentsCountryCode")
 	public Country getParentsCountry() {
 		return parentsCountry;
 	}
@@ -1011,12 +990,13 @@ public class Form {
 		this.parentsCountry = parentsCountry;
 	}
 
-	public int getPreferedSpouseAge() {
-		return preferedSpouseAge;
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getPreferedSpouseDOB() {
+		return preferedSpouseDOB;
 	}
 
-	public void setPreferedSpouseAge(int preferedSpouseAge) {
-		this.preferedSpouseAge = preferedSpouseAge;
+	public void setPreferedSpouseDOB(Date preferedSpouseDOB) {
+		this.preferedSpouseDOB = preferedSpouseDOB;
 	}
 
 	public String getPreferedSpouseQualification() {
@@ -1053,7 +1033,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="selectionDecision")
+	@JoinColumn(name = "selectionDecision")
 	public SelectionDecision getSelectionDecision() {
 		return selectionDecision;
 	}
@@ -1104,7 +1084,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="candidateBranch")
+	@JoinColumn(name = "candidateBranch")
 	public Branch getCandidateBranch() {
 		return candidateBranch;
 	}
@@ -1114,7 +1094,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="candidateSecretaryApproval")
+	@JoinColumn(name = "candidateSecretaryApproval")
 	public ApprovalStatus getCandidateSecretaryApproval() {
 		return candidateSecretaryApproval;
 	}
@@ -1213,7 +1193,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="parentsBranch")
+	@JoinColumn(name = "parentsBranch")
 	public Branch getParentsBranch() {
 		return parentsBranch;
 	}
@@ -1221,7 +1201,7 @@ public class Form {
 	public void setParentsBranch(Branch parentsBranch) {
 		this.parentsBranch = parentsBranch;
 	}
-	
+
 	public String getParentsNOC() {
 		return parentsNOC;
 	}
@@ -1231,7 +1211,7 @@ public class Form {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="parentsSecretaryApproval")
+	@JoinColumn(name = "parentsSecretaryApproval")
 	public ApprovalStatus getParentsSecretaryApproval() {
 		return parentsSecretaryApproval;
 	}
@@ -1263,7 +1243,7 @@ public class Form {
 	public void setParentsSecretaryMobile(String parentsSecretaryMobile) {
 		this.parentsSecretaryMobile = parentsSecretaryMobile;
 	}
-	
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "form")
 	public List<Sibling> getSiblings() {
 		return siblings;
@@ -1272,50 +1252,39 @@ public class Form {
 	public void setSiblings(List<Sibling> siblings) {
 		this.siblings = siblings;
 	}
-	
 
-	public static Form getRandomForm(){
-		int random=new Random().nextInt(1000);
+	public static Form getRandomForm() {
+		int random = new Random().nextInt(1000);
 		Form form = new Form();
 		form.setDateCreated(new Date());
-		form.setFormStatus(new FormStatus(random%3+1));
-		form.setInitiatedStatus(new Truth(random%2+1));
-		form.setName("Test Name: "+ random);
+		form.setFormStatus(new FormStatus(random % 3 + 1));
+		form.setName("Test Name: " + random);
 		form.setDateOfBirth(new Date());
 		form.setDateOfInitiation(new Date());
 		form.setNationality(new Country());
 		form.setEducationalQualification("Graduate");
-		form.setGender(new Gender(random%2+1));
-		form.setBloodGroup(new BloodGroup(random%3+1));
-		form.setRhFactor(new RHFactor(random%2+1));
-		form.setOccupation(new Occupation(random%5+1));
-		form.setdBResident(new Truth(random%2+1));
+		form.setBloodGroup(new BloodGroup(random % 8 + 1));
+		form.setOccupation(new Occupation(random % 5 + 1));
 		form.setOfficeCountry(new Country());
-		form.setFathersOccupation(new Occupation(random%5+1));
-		form.setMothersOccupation(new Occupation(random%5+1));
-		form.setSelectionDecision(new SelectionDecision(random%3+1));
+		form.setFathersOccupation(new Occupation(random % 5 + 1));
+		form.setMothersOccupation(new Occupation(random % 5 + 1));
+		form.setSelectionDecision(new SelectionDecision(random % 3 + 1));
 		form.setCandidateBranch(new Branch(1));
-		form.setCandidateSecretaryApproval(new ApprovalStatus(random%3+1));
+		form.setCandidateSecretaryApproval(new ApprovalStatus(random % 3 + 1));
 		form.setParentsBranch(new Branch(1));
-		form.setParentsSecretaryApproval(new ApprovalStatus(random%3+1));
+		form.setParentsSecretaryApproval(new ApprovalStatus(random % 3 + 1));
 		form.setDateOfLastDBVisit(new Date());
-		form.setAttendSatsang(new Truth(random%2+1));
-		form.setParticipateInSeva(new Truth(random%2+1));
-		form.setVegetarian(new Truth(random%2+1));
-		form.setTeetotaler(new Truth(random%2+1));
-		form.setFathersName("Father: "+random);
-		form.setPaternalGrandFathersName("Paternal Grand Father: "+random);
-		form.setFathersInitiated(new Truth(random%2+1));
+		form.setFathersName("Father: " + random);
+		form.setPaternalGrandFathersName("Paternal Grand Father: " + random);
 		form.setFathersNationality(new Country());
-		form.setFathersSatsangSevaDetails("Satsang and Seva Details: "+random);
-		form.setFathersLastZonalAttended("Basnat 2015: "+random);
-		form.setMothersName("Mother: "+random);
-		form.setMaternalGrandFathersName("Maternal Grand Father: "+random);
-		form.setMothersInitiated(new Truth(random%2+1));
+		form.setFathersSatsangSevaDetails("Satsang and Seva Details: " + random);
+		form.setFathersLastZonalAttended("Basnat 2015: " + random);
+		form.setMothersName("Mother: " + random);
+		form.setMaternalGrandFathersName("Maternal Grand Father: " + random);
 		form.setMothersNationality(new Country());
-		form.setMothersSatsangSevaDetails("Satsang and Seva Details: "+random);
-		form.setMothersLastZonalAttended("Basnat 2015: "+random);
-		
+		form.setMothersSatsangSevaDetails("Satsang and Seva Details: " + random);
+		form.setMothersLastZonalAttended("Basnat 2015: " + random);
+
 		form.setParentsBuildingNumber("Flat 207");
 		form.setParentsStreet("Pocket 4, Sector 12");
 		form.setParentsLocality("Dwarka");
@@ -1323,16 +1292,16 @@ public class Form {
 		form.setParentsDistrict("South West Delhi");
 		form.setParentsState("Delhi");
 		form.setParentsCountry(new Country());
-		
+
 		List<Sibling> siblings = new ArrayList<Sibling>();
-		
-		for(int i=0;i<(2+(new Random().nextInt(5)));i++){
+
+		for (int i = 0; i < (2 + (new Random().nextInt(5))); i++) {
 			siblings.add(Sibling.getRandomSibling());
 		}
-		
+
 		form.setSiblings(siblings);
 		logger.info("Number of Siblings: " + siblings.size());
 		return form;
 	}
-	
+
 }

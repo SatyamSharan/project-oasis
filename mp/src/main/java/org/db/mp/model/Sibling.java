@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -28,16 +30,16 @@ public class Sibling {
 
 	private int siblingId;
 	private Form form;
-	private SiblingType type;
+	private boolean type;
 	private Date dateOfBirth;
-	private Truth maritalStatus;
+	private MaritalStatus maritalStatus;
 	private Date dateOfMarriage;
-	private Truth throughMarriagePanchayat;
-	private Truth registeredInMarriagePanchayat;
-	private Truth satsangiFamily;
+	private boolean throughMarriagePanchayat;
+	private boolean registeredInMarriagePanchayat;
+	private boolean satsangiFamily;
 	private String reasons;
 	private String name;
-	private Truth initiatedStatus;
+	private boolean initiatedStatus;
 	private Occupation occupation;
 	
 	@Id
@@ -59,12 +61,11 @@ public class Sibling {
 		this.form = form;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="type")
-	public SiblingType getType() {
+	@Type(type="yes_no")
+	public boolean isType() {
 		return type;
 	}
-	public void setType(SiblingType type) {
+	public void setType(boolean type) {
 		this.type = type;
 	}
 	
@@ -78,10 +79,10 @@ public class Sibling {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="maritalStatus")
-	public Truth getMaritalStatus() {
+	public MaritalStatus getMaritalStatus() {
 		return maritalStatus;
 	}
-	public void setMaritalStatus(Truth maritalStatus) {
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
 	
@@ -93,30 +94,28 @@ public class Sibling {
 		this.dateOfMarriage = dateOfMarriage;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="throughMarriagePanchayat")
-	public Truth getThroughMarriagePanchayat () {
+	@Type(type="yes_no")
+	public boolean isThroughMarriagePanchayat () {
 		return throughMarriagePanchayat;
 	}
-	public void setThroughMarriagePanchayat (Truth throughMarriagePanchayat) {
+	public void setThroughMarriagePanchayat (boolean throughMarriagePanchayat) {
 		this.throughMarriagePanchayat = throughMarriagePanchayat;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="registeredInMarriagePanchayat")
-	public Truth getRegisteredInMarriagePanchayat() {
+	@Type(type="yes_no")
+	public boolean isRegisteredInMarriagePanchayat() {
 		return registeredInMarriagePanchayat;
 	}
-	public void setRegisteredInMarriagePanchayat(Truth registeredInMarriagePanchayat) {
+	public void setRegisteredInMarriagePanchayat(boolean registeredInMarriagePanchayat) {
 		this.registeredInMarriagePanchayat = registeredInMarriagePanchayat;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="satsangiFamily")
-	public Truth getSatsangiFamily() {
+	@Type(type="yes_no")
+	public boolean isSatsangiFamily() {
 		return satsangiFamily;
 	}
-	public void setSatsangiFamily(Truth satsangiFamily) {
+	
+	public void setSatsangiFamily(boolean satsangiFamily) {
 		this.satsangiFamily = satsangiFamily;
 	}
 	public String getReasons() {
@@ -132,12 +131,11 @@ public class Sibling {
 		this.name = name;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="initiatedStatus")
-	public Truth getInitiatedStatus() {
+	@Type(type="yes_no")
+	public boolean isInitiatedStatus() {
 		return initiatedStatus;
 	}
-	public void setInitiatedStatus(Truth initiatedStatus) {
+	public void setInitiatedStatus(boolean initiatedStatus) {
 		this.initiatedStatus = initiatedStatus;
 	}
 	
@@ -154,17 +152,12 @@ public class Sibling {
 		
 		int random=new Random().nextInt(1000);
 		Sibling sibling = new Sibling();
-		sibling.setType(new SiblingType(random%2+1));
 		sibling.setDateOfBirth(new Date());
-		sibling.setMaritalStatus(new Truth(random%2+1));
+		sibling.setMaritalStatus(new MaritalStatus(random%2+1));
 		sibling.setDateOfMarriage(new Date());
-		sibling.setThroughMarriagePanchayat(new Truth(random%2+1));
-		sibling.setRegisteredInMarriagePanchayat(new Truth(random%2+1));
-		sibling.setSatsangiFamily(new Truth(random%2+1));
 		
 		sibling.setReasons("Random reason");
 		sibling.setName("Test Sibling: "+random);
-		sibling.setInitiatedStatus(new Truth(random%2+1));
 		sibling.setOccupation(new  Occupation(random%5+1));
 		
 		return sibling;

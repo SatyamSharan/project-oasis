@@ -6,6 +6,7 @@ package org.db.mp.controller.ui;
 import org.apache.log4j.Logger;
 import org.db.mp.dao.FormDAO;
 import org.db.mp.dao.SiblingDAO;
+import org.db.mp.json.CandidateJSON;
 import org.db.mp.model.Form;
 import org.db.mp.model.Sibling;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class EntryController {
 	public String index(ModelMap map) {
 		logger.info("Reached in the controller");
 		map.put("msg", "Hello Spring 4 Web MVC!");
-		Form form=Form.getRandomForm();
+		CandidateJSON candidateJSON=CandidateJSON.getRandomCandidate();
+		Form form = new Form(candidateJSON);		
 		formDAO.save(form);
 		for(Sibling sibling:form.getSiblings())sibling.setForm(form);
 		siblingDAO.save(form.getSiblings());

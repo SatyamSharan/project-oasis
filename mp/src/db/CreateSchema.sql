@@ -7,22 +7,7 @@ create table CountryMaster(
 	`value` VARCHAR(255) NOT NULL
 );
 
-create table SiblingMaster(
-	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`value` VARCHAR(255) NOT NULL
-);
-
-create table GenderMaster(
-	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`value` VARCHAR(255) NOT NULL
-);
-
 create table BloodGroupMaster(
-	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`value` VARCHAR(255) NOT NULL
-);
-
-create table RHFactorMaster(
 	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`value` VARCHAR(255) NOT NULL
 );
@@ -47,7 +32,7 @@ create table SelectionDecisionMaster(
 	`value` VARCHAR(255) NOT NULL
 );
 
-create table TruthMaster(
+create table MaritalStatusMaster(
 	`code` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`value` VARCHAR(255) NOT NULL
 );
@@ -72,16 +57,15 @@ CREATE TABLE Form(
 	
 	name VARCHAR(255) NOT NULL,
 	dateOfBirth DATETIME NOT NULL,
-	initiatedStatus int NOT NULL,
+	initiatedStatus CHAR(1) NOT NULL,
 	dateOfInitiation DATETIME NOT NULL,
 	nationality INT NOT NULL,
 	health VARCHAR(255),
 	height INT,
 	weight INT,
 	educationalQualification VARCHAR(255) NOT NULL,
-	gender INT NOT NULL,
+	gender CHAR(1) NOT NULL,
 	bloodGroup INT,
-	rhFactor INT ,
 	occupation INT NOT NULL,
 	nameOfEmployer VARCHAR(255),
 	dateOfJoining DATETIME,
@@ -100,29 +84,29 @@ CREATE TABLE Form(
 	
 	completionOfEducation DATETIME,
 	
-	dBResident INT NOT NULL,
+	dBResident CHAR(1) NOT NULL,
 	dateOfLastDBVisit DATETIME NOT NULL,
-	attendSatsang INT NOT NULL,
-	participateInSeva INT NOT NULL,
+	attendSatsang CHAR(1) NOT NULL,
+	participateInSeva CHAR(1) NOT NULL,
 	sevaDetails VARCHAR(255),
 	
-	vegetarian INT NOT NULL,
-	teetotaler INT NOT NULL,
+	vegetarian CHAR(1) NOT NULL,
+	teetotaler CHAR(1) NOT NULL,
 	
 	
 	
 	fathersName VARCHAR(255) NOT NULL,
 	paternalGrandFathersName VARCHAR(255) NOT NULL,
-	paternalGrandFatherInitiated INT,
+	paternalGrandFatherInitiated CHAR(1),
 	paternalGrandMothersName VARCHAR(255),
-	paternalGrandMotherInitiated INT,
+	paternalGrandMotherInitiated CHAR(1),
 	fathersOccupation INT,
 	fathersDesignation VARCHAR(255),
 	fathersDepartment VARCHAR(255),
 	fathersPlace VARCHAR(255),
 	fathersMonthlyIncome INT,
 	fathersAssetDetails VARCHAR(255),
-	fathersInitiated INT NOT NULL,
+	fathersInitiated CHAR(1) NOT NULL,
 	fathersUid VARCHAR(255),
 	fathersPlaceOfInitiation VARCHAR(255),
 	fathersDateOfFirstInitiation DATETIME,
@@ -139,16 +123,16 @@ CREATE TABLE Form(
 	
 	mothersName VARCHAR(255) NOT NULL,
 	maternalGrandFathersName VARCHAR(255) NOT NULL,
-	maternalGrandFatherInitiated INT,
+	maternalGrandFatherInitiated CHAR(1),
 	maternalGrandMothersName VARCHAR(255),
-	maternalGeandMotherInitiated INT,
+	maternalGeandMotherInitiated CHAR(1),
 	mothersOccupation INT,
 	mothersDesignation VARCHAR(255),
 	mothersDepartment VARCHAR(255),
 	mothersPlace VARCHAR(255),
 	mothersMonthlyIncome INT,
 	mothersAssetDetails VARCHAR(255),
-	mothersInitiated INT NOT NULL,
+	mothersInitiated CHAR(1) NOT NULL,
 	mothersUid VARCHAR(255),
 	mothersPlaceOfInitiation VARCHAR(255),
 	mothersDateOfFirstInitiation DATETIME,
@@ -172,7 +156,7 @@ CREATE TABLE Form(
 	parentsCountryCode INT NOT NULL,
 	
 	
-	preferedSpouseAge INT,
+	preferedSpouseDOB DATETIME,
 	preferedSpouseQualification VARCHAR(255),
 	preferedSpouseOccupation VARCHAR(255),
 	preferedSpousePersonality VARCHAR(255),
@@ -213,10 +197,7 @@ CREATE TABLE Form(
 	parentsSecretaryMobile VARCHAR(50),
 
 	FOREIGN KEY (formStatus) REFERENCES FormStatusMaster (`code`),
-	
-	FOREIGN KEY (gender) REFERENCES GenderMaster (`code`),
 	FOREIGN KEY (bloodGroup) REFERENCES BloodGroupMaster (`code`),
-	FOREIGN KEY (rhFactor) REFERENCES RHFactorMaster (`code`),
 	FOREIGN KEY (occupation) REFERENCES OccupationMaster (`code`),
 	FOREIGN KEY (fathersOccupation) REFERENCES OccupationMaster (`code`),
 	FOREIGN KEY (mothersOccupation) REFERENCES OccupationMaster (`code`),
@@ -233,42 +214,24 @@ CREATE TABLE Form(
 	FOREIGN KEY (parentsCountryCode) REFERENCES CountryMaster (`code`),
 	
 	FOREIGN KEY (parentsBranch) REFERENCES BranchMaster (`code`),
-	FOREIGN KEY (candidateBranch) REFERENCES BranchMaster (`code`),
-	
-	FOREIGN KEY (initiatedStatus) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (dBResident) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (attendSatsang) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (participateInSeva) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (vegetarian) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (teetotaler) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (paternalGrandFatherInitiated) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (paternalGrandMotherInitiated) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (fathersInitiated) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (maternalGrandFatherInitiated) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (maternalGeandMotherInitiated) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (mothersInitiated) REFERENCES TruthMaster (`code`)
+	FOREIGN KEY (candidateBranch) REFERENCES BranchMaster (`code`)
 );
 
 create table Sibling(
 	siblingId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	formNum INT NOT NULL,
-	`type` int NOT NULL,
+	`type` CHAR(1) NOT NULL,
 	dateOfBirth DATETIME NOT NULL,
 	maritalStatus int NOT NULL,
-	dateOfMarriage DATETIME NOT NULL,
-	throughMarriagePanchayat int NOT NULL,
-	registeredInMarriagePanchayat int NOT NULL,
-	satsangiFamily int NOT NULL,
-	reasons VARCHAR(255) NOT NULL,
+	dateOfMarriage DATETIME,
+	throughMarriagePanchayat CHAR(1),
+	registeredInMarriagePanchayat CHAR(1),
+	satsangiFamily CHAR(1),
+	reasons VARCHAR(255),
 	name VARCHAR(255) NOT NULL,
-	initiatedStatus int NOT NULL,
+	initiatedStatus CHAR(1) NOT NULL,
 	occupation int NOT NULL,
-	FOREIGN KEY (`type`) REFERENCES SiblingMaster (`code`),
 	FOREIGN KEY (formNum) REFERENCES Form (formNum),
-	FOREIGN KEY (maritalStatus) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (throughMarriagePanchayat) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (registeredInMarriagePanchayat) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (satsangiFamily) REFERENCES TruthMaster (`code`),
-	FOREIGN KEY (initiatedStatus) REFERENCES TruthMaster (`code`),
+	FOREIGN KEY (maritalStatus) REFERENCES MaritalStatusMaster (`code`),
 	FOREIGN KEY (occupation) REFERENCES OccupationMaster (`code`)
 );

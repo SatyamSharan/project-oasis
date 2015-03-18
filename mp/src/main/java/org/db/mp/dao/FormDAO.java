@@ -7,8 +7,8 @@ import org.hibernate.SessionFactory;
 
 public interface FormDAO {
 	public void setSessionFactory(SessionFactory sessionFactory);
-	public void save(Form form);
+	public Form save(Form form);
 	public void update(Form form);
 	public List<Form> list();
-	public List<Form> get(int formNum);
+	public Form get(int formNum);
 }
