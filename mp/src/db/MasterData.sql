@@ -4,9 +4,9 @@ INSERT INTO BranchMaster (name, city, state, countryCode, secretaryName, mobile,
 
 INSERT INTO BloodGroupMaster (`value`) values('A+'),('B+'),('AB+'),('O+'),('A-'),('B-'),('AB-'),('O-');
 
-INSERT INTO OccupationMaster (`value`) values('Service'),('Profession'),('Business'),('Student'),('Homemaker'),('Unemployed');
+INSERT INTO OccupationMaster (`value`) values('Service'),('Profession'),('Business'),('Student'),('Homemaker'),('Unemployed'),('Retired');
 
-INSERT INTO ApprovalStatusMaster (`value`) values('Waiting'),('Approved'),('Hold'),('Rejected');
+INSERT INTO ApprovalStatusMaster (`value`) values('Not Submitted'),('In Process'),('Form A Approved'),('Form A Rejected'),('Form B Approved'),('Form B Rejected');
 
 INSERT INTO FormStatusMaster (`value`) values('Draft'),('Submitted'),('Approved');
 

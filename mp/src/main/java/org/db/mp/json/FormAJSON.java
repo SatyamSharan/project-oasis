@@ -1,45 +1,41 @@
 /**
  * 
  */
-package org.db.mp.model;
+package org.db.mp.json;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Type;
+import org.db.mp.model.ApprovalStatus;
+import org.db.mp.model.Branch;
+import org.db.mp.model.Country;
+import org.db.mp.model.Form;
+import org.db.mp.model.FormStatus;
+import org.db.mp.model.Occupation;
+import org.db.mp.model.Sibling;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author Satyam Sharan <satyam.sharan@hotmail.com>
  *
  */
+public class FormAJSON {
 
-@Entity
-@Table(name = "Form")
-public class FormA {
-
-	public FormA() {
+	public FormAJSON() {
 		super();
+	}
+	
+	public FormAJSON(Form form) {
+		BeanUtils.copyProperties(form, this);
 	}
 
 	private int formNum;
-	private Date dateCreated;
+	private Date dateCreated=new Date();
 
 	// Many to One
-	private FormStatus formStatus;
+	private FormStatus formStatus= new FormStatus();
 
 	private String name;
 	private Date dateOfBirth;
@@ -151,17 +147,14 @@ public class FormA {
 
 	private Date parentsDateOfSignature;
 	private String parentsNameOfSignatory;
+	
+	
+	private ApprovalStatus candidateSecretaryApproval;
+	private String candidateSecretaryName;
+	private String candidateSecretaryEmail;
+	private String candidateSecretaryMobile;
 
-	// Parents Branch Secretary Approval
-
-	private int fathersBranchAttendance;
-	private int fathersBranchAttendanceTotal;
-	private String fathersSevaDetails;
-
-	private int mothersBranchAttendance;
-	private int mothersBranchAttendanceTotal;
-	private String mothersSevaDetails;
-
+	
 	// Many to one
 	private ApprovalStatus parentsSecretaryApproval;
 
@@ -169,18 +162,6 @@ public class FormA {
 	private String parentsSecretaryEmail;
 	private String parentsSecretaryMobile;
 
-	// Candidate Branch Secretary Approval
-	private int candidateBranchAttendance;
-	private int candidateBranchAttendanceTotal;
-	private String candidateSevaDetails;
-
-	private ApprovalStatus candidateSecretaryApproval;
-	private String candidateSecretaryName;
-	private String candidateSecretaryEmail;
-	private String candidateSecretaryMobile;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getFormNum() {
 		return formNum;
 	}
@@ -189,7 +170,6 @@ public class FormA {
 		this.formNum = formNum;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -198,8 +178,6 @@ public class FormA {
 		this.dateCreated = dateCreated;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="formStatus")
 	public FormStatus getFormStatus() {
 		return formStatus;
 	}
@@ -216,7 +194,6 @@ public class FormA {
 		this.name = name;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -225,7 +202,6 @@ public class FormA {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isInitiatedStatus() {
 		return initiatedStatus;
 	}
@@ -234,7 +210,6 @@ public class FormA {
 		this.initiatedStatus = initiatedStatus;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfInitiation() {
 		return dateOfInitiation;
 	}
@@ -243,8 +218,6 @@ public class FormA {
 		this.dateOfInitiation = dateOfInitiation;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="nationality")
 	public Country getNationality() {
 		return nationality;
 	}
@@ -261,7 +234,6 @@ public class FormA {
 		this.educationalQualification = educationalQualification;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isGender() {
 		return gender;
 	}
@@ -269,9 +241,7 @@ public class FormA {
 	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="occupation")
+
 	public Occupation getOccupation() {
 		return occupation;
 	}
@@ -288,7 +258,6 @@ public class FormA {
 		this.nameOfEmployer = nameOfEmployer;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfJoining() {
 		return dateOfJoining;
 	}
@@ -377,8 +346,6 @@ public class FormA {
 		this.officeState = officeState;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="officeCountryCode")
 	public Country getOfficeCountry() {
 		return officeCountry;
 	}
@@ -387,7 +354,6 @@ public class FormA {
 		this.officeCountry = officeCountry;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isdBResident() {
 		return dBResident;
 	}
@@ -396,7 +362,6 @@ public class FormA {
 		this.dBResident = dBResident;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isAttendSatsang() {
 		return attendSatsang;
 	}
@@ -405,7 +370,6 @@ public class FormA {
 		this.attendSatsang = attendSatsang;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isParticipateInSeva() {
 		return participateInSeva;
 	}
@@ -422,7 +386,6 @@ public class FormA {
 		this.sevaDetails = sevaDetails;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfLastDBVisit() {
 		return dateOfLastDBVisit;
 	}
@@ -431,7 +394,6 @@ public class FormA {
 		this.dateOfLastDBVisit = dateOfLastDBVisit;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isVegetarian() {
 		return vegetarian;
 	}
@@ -440,7 +402,6 @@ public class FormA {
 		this.vegetarian = vegetarian;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isTeetotaler() {
 		return teetotaler;
 	}
@@ -449,8 +410,6 @@ public class FormA {
 		this.teetotaler = teetotaler;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="candidateBranch")
 	public Branch getCandidateBranch() {
 		return candidateBranch;
 	}
@@ -459,7 +418,6 @@ public class FormA {
 		this.candidateBranch = candidateBranch;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCandidateDateOfSignature() {
 		return candidateDateOfSignature;
 	}
@@ -476,8 +434,6 @@ public class FormA {
 		this.candidateNameOfSignatory = candidateNameOfSignatory;
 	}
 
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "form")
 	public List<Sibling> getSiblings() {
 		return siblings;
 	}
@@ -502,7 +458,6 @@ public class FormA {
 		this.paternalGrandFathersName = paternalGrandFathersName;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isFathersInitiated() {
 		return fathersInitiated;
 	}
@@ -511,7 +466,6 @@ public class FormA {
 		this.fathersInitiated = fathersInitiated;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getFathersDateOfFirstInitiation() {
 		return fathersDateOfFirstInitiation;
 	}
@@ -527,9 +481,7 @@ public class FormA {
 	public void setFathersUid(String fathersUid) {
 		this.fathersUid = fathersUid;
 	}
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="fathersNationality")
+
 	public Country getFathersNationality() {
 		return fathersNationality;
 	}
@@ -602,7 +554,6 @@ public class FormA {
 		this.maternalGrandFathersName = maternalGrandFathersName;
 	}
 
-	@Type(type = "yes_no")
 	public boolean isMothersInitiated() {
 		return mothersInitiated;
 	}
@@ -611,7 +562,6 @@ public class FormA {
 		this.mothersInitiated = mothersInitiated;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getMothersDateOfFirstInitiation() {
 		return mothersDateOfFirstInitiation;
 	}
@@ -628,8 +578,6 @@ public class FormA {
 		this.mothersUid = mothersUid;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="mothersNationality")
 	public Country getMothersNationality() {
 		return mothersNationality;
 	}
@@ -734,8 +682,6 @@ public class FormA {
 		this.parentsState = parentsState;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="parentsCountryCode")
 	public Country getParentsCountry() {
 		return parentsCountry;
 	}
@@ -744,8 +690,6 @@ public class FormA {
 		this.parentsCountry = parentsCountry;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="parentsBranch")
 	public Branch getParentsBranch() {
 		return parentsBranch;
 	}
@@ -762,7 +706,6 @@ public class FormA {
 		this.parentsNOC = parentsNOC;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getParentsDateOfSignature() {
 		return parentsDateOfSignature;
 	}
@@ -778,58 +721,40 @@ public class FormA {
 	public void setParentsNameOfSignatory(String parentsNameOfSignatory) {
 		this.parentsNameOfSignatory = parentsNameOfSignatory;
 	}
-
-	public int getFathersBranchAttendance() {
-		return fathersBranchAttendance;
+	
+	
+	public ApprovalStatus getCandidateSecretaryApproval() {
+		return candidateSecretaryApproval;
 	}
 
-	public void setFathersBranchAttendance(int fathersBranchAttendance) {
-		this.fathersBranchAttendance = fathersBranchAttendance;
+	public void setCandidateSecretaryApproval(ApprovalStatus candidateSecretaryApproval) {
+		this.candidateSecretaryApproval = candidateSecretaryApproval;
 	}
 
-	public int getFathersBranchAttendanceTotal() {
-		return fathersBranchAttendanceTotal;
+	public String getCandidateSecretaryName() {
+		return candidateSecretaryName;
 	}
 
-	public void setFathersBranchAttendanceTotal(int fathersBranchAttendanceTotal) {
-		this.fathersBranchAttendanceTotal = fathersBranchAttendanceTotal;
+	public void setCandidateSecretaryName(String candidateSecretaryName) {
+		this.candidateSecretaryName = candidateSecretaryName;
 	}
 
-	public String getFathersSevaDetails() {
-		return fathersSevaDetails;
+	public String getCandidateSecretaryEmail() {
+		return candidateSecretaryEmail;
 	}
 
-	public void setFathersSevaDetails(String fathersSevaDetails) {
-		this.fathersSevaDetails = fathersSevaDetails;
+	public void setCandidateSecretaryEmail(String candidateSecretaryEmail) {
+		this.candidateSecretaryEmail = candidateSecretaryEmail;
 	}
 
-	public int getMothersBranchAttendance() {
-		return mothersBranchAttendance;
+	public String getCandidateSecretaryMobile() {
+		return candidateSecretaryMobile;
 	}
 
-	public void setMothersBranchAttendance(int mothersBranchAttendance) {
-		this.mothersBranchAttendance = mothersBranchAttendance;
+	public void setCandidateSecretaryMobile(String candidateSecretaryMobile) {
+		this.candidateSecretaryMobile = candidateSecretaryMobile;
 	}
 
-	public int getMothersBranchAttendanceTotal() {
-		return mothersBranchAttendanceTotal;
-	}
-
-	public void setMothersBranchAttendanceTotal(int mothersBranchAttendanceTotal) {
-		this.mothersBranchAttendanceTotal = mothersBranchAttendanceTotal;
-	}
-
-	public String getMothersSevaDetails() {
-		return mothersSevaDetails;
-	}
-
-	public void setMothersSevaDetails(String mothersSevaDetails) {
-		this.mothersSevaDetails = mothersSevaDetails;
-	}
-
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="parentsSecretaryApproval")
 	public ApprovalStatus getParentsSecretaryApproval() {
 		return parentsSecretaryApproval;
 	}
@@ -862,100 +787,39 @@ public class FormA {
 		this.parentsSecretaryMobile = parentsSecretaryMobile;
 	}
 
-	public int getCandidateBranchAttendance() {
-		return candidateBranchAttendance;
-	}
-
-	public void setCandidateBranchAttendance(int candidateBranchAttendance) {
-		this.candidateBranchAttendance = candidateBranchAttendance;
-	}
-
-	public int getCandidateBranchAttendanceTotal() {
-		return candidateBranchAttendanceTotal;
-	}
-
-	public void setCandidateBranchAttendanceTotal(int candidateBranchAttendanceTotal) {
-		this.candidateBranchAttendanceTotal = candidateBranchAttendanceTotal;
-	}
-
-	public String getCandidateSevaDetails() {
-		return candidateSevaDetails;
-	}
-
-	public void setCandidateSevaDetails(String candidateSevaDetails) {
-		this.candidateSevaDetails = candidateSevaDetails;
-	}
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="candidateSecretaryApproval")
-	public ApprovalStatus getCandidateSecretaryApproval() {
-		return candidateSecretaryApproval;
-	}
-
-	public void setCandidateSecretaryApproval(ApprovalStatus candidateSecretaryApproval) {
-		this.candidateSecretaryApproval = candidateSecretaryApproval;
-	}
-
-	public String getCandidateSecretaryName() {
-		return candidateSecretaryName;
-	}
-
-	public void setCandidateSecretaryName(String candidateSecretaryName) {
-		this.candidateSecretaryName = candidateSecretaryName;
-	}
-
-	public String getCandidateSecretaryEmail() {
-		return candidateSecretaryEmail;
-	}
-
-	public void setCandidateSecretaryEmail(String candidateSecretaryEmail) {
-		this.candidateSecretaryEmail = candidateSecretaryEmail;
-	}
-
-	public String getCandidateSecretaryMobile() {
-		return candidateSecretaryMobile;
-	}
-
-	public void setCandidateSecretaryMobile(String candidateSecretaryMobile) {
-		this.candidateSecretaryMobile = candidateSecretaryMobile;
-	}
-	
-
-	public static FormA getRandomFormA() {
+	public static FormAJSON getRandomCandidate() {
 		int random = new Random().nextInt(1000);
-		FormA form = new FormA();
-		form.setDateCreated(new Date());
-		form.setFormStatus(new FormStatus(random % 3 + 1));
-		form.setName("Test Name: " + random);
-		form.setDateOfBirth(new Date());
-		form.setDateOfInitiation(new Date());
-		form.setNationality(new Country());
-		form.setEducationalQualification("Graduate");
-		form.setOccupation(new Occupation(random % 5 + 1));
-		form.setOfficeCountry(new Country());
-		form.setCandidateBranch(new Branch(1));
-		form.setCandidateSecretaryApproval(new ApprovalStatus(random % 3 + 1));
-		form.setParentsBranch(new Branch(1));
-		form.setParentsSecretaryApproval(new ApprovalStatus(random % 3 + 1));
-		form.setDateOfLastDBVisit(new Date());
-		form.setFathersName("Father: " + random);
-		form.setPaternalGrandFathersName("Paternal Grand Father: " + random);
-		form.setFathersNationality(new Country());
-		form.setFathersSatsangSevaDetails("Satsang and Seva Details: " + random);
-		form.setFathersLastZonalAttended("Basnat 2015: " + random);
-		form.setMothersName("Mother: " + random);
-		form.setMaternalGrandFathersName("Maternal Grand Father: " + random);
-		form.setMothersNationality(new Country());
-		form.setMothersSatsangSevaDetails("Satsang and Seva Details: " + random);
-		form.setMothersLastZonalAttended("Basnat 2015: " + random);
+		FormAJSON formAJSON = new FormAJSON();
+		formAJSON.setDateCreated(new Date());
+		formAJSON.setFormStatus(new FormStatus(random % 3 + 1));
+		formAJSON.setName("Test Name: " + random);
+		formAJSON.setDateOfBirth(new Date());
+		formAJSON.setDateOfInitiation(new Date());
+		formAJSON.setNationality(new Country());
+		formAJSON.setEducationalQualification("Graduate");
+		formAJSON.setOccupation(new Occupation(random % 5 + 1));
+		formAJSON.setOfficeCountry(new Country());
+		formAJSON.setCandidateBranch(new Branch(1));
+		formAJSON.setParentsBranch(new Branch(1));
+		formAJSON.setDateOfLastDBVisit(new Date());
+		formAJSON.setFathersName("Father: " + random);
+		formAJSON.setPaternalGrandFathersName("Paternal Grand Father: " + random);
+		formAJSON.setFathersNationality(new Country());
+		formAJSON.setFathersSatsangSevaDetails("Satsang and Seva Details: " + random);
+		formAJSON.setFathersLastZonalAttended("Basnat 2015: " + random);
+		formAJSON.setMothersName("Mother: " + random);
+		formAJSON.setMaternalGrandFathersName("Maternal Grand Father: " + random);
+		formAJSON.setMothersNationality(new Country());
+		formAJSON.setMothersSatsangSevaDetails("Satsang and Seva Details: " + random);
+		formAJSON.setMothersLastZonalAttended("Basnat 2015: " + random);
 
-		form.setParentsBuildingNumber("Flat 207");
-		form.setParentsStreet("Pocket 4, Sector 12");
-		form.setParentsLocality("Dwarka");
-		form.setParentsCity("New Delhi");
-		form.setParentsDistrict("South West Delhi");
-		form.setParentsState("Delhi");
-		form.setParentsCountry(new Country());
+		formAJSON.setParentsBuildingNumber("Flat 207");
+		formAJSON.setParentsStreet("Pocket 4, Sector 12");
+		formAJSON.setParentsLocality("Dwarka");
+		formAJSON.setParentsCity("New Delhi");
+		formAJSON.setParentsDistrict("South West Delhi");
+		formAJSON.setParentsState("Delhi");
+		formAJSON.setParentsCountry(new Country());
 
 		List<Sibling> siblings = new ArrayList<Sibling>();
 
@@ -963,8 +827,7 @@ public class FormA {
 			siblings.add(Sibling.getRandomSibling());
 		}
 
-		form.setSiblings(siblings);
-		return form;
+		formAJSON.setSiblings(siblings);
+		return formAJSON;
 	}
-	
 }

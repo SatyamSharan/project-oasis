@@ -2,6 +2,7 @@ package org.db.mp.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.db.mp.dao.FormDAO;
 import org.db.mp.model.Form;
 import org.db.mp.model.Sibling;
@@ -11,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class FormDAOImpl implements FormDAO{
+	static Logger logger = Logger.getLogger("mp");
 	private SessionFactory sessionFactory;
 	
 	@Override
@@ -24,7 +26,7 @@ public class FormDAOImpl implements FormDAO{
 		int formNum=(int)session.save(form);
 		for(Sibling sibling:form.getSiblings()){
 			sibling.setForm(form);
-			session.persist(sibling);
+			session.save(sibling);
 		}
 		//Form savedForm=(Form)session.get(Form.class, formNum);
 		tx.commit();
@@ -32,12 +34,19 @@ public class FormDAOImpl implements FormDAO{
 		return get(formNum);
 	}
 	@Override
-	public void update(Form form) {
+	public Form update(Form form) {
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
+		int formNum=form.getFormNum();
+		logger.info("Updating Form: "+formNum);
 		session.update(form);
+		for(Sibling sibling:form.getSiblings()){
+			sibling.setForm(form);
+			session.update(sibling);
+		}
 		tx.commit();
 		session.close();
+		return get(formNum);
 	}
 	@Override
 	public List<Form> list() {
@@ -52,6 +61,7 @@ public class FormDAOImpl implements FormDAO{
 	public Form get(int formNum) {
 		Session session = this.sessionFactory.openSession();
 		Form form=(Form) session.get(Form.class, formNum);
+		session.close();
 		return form;
 	}
 	

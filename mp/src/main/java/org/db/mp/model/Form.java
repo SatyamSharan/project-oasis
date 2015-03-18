@@ -20,9 +20,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.apache.log4j.Logger;
-import org.db.mp.json.CandidateJSON;
+import org.db.mp.json.FormAJSON;
+import org.db.mp.json.FormBJSON;
 import org.hibernate.annotations.Type;
 import org.springframework.beans.BeanUtils;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Satyam Sharan <satyam.sharan@hotmail.com>
@@ -36,13 +40,17 @@ public class Form {
 		super();
 	}
 
-	public Form(CandidateJSON candidateJSON) {
-		BeanUtils.copyProperties(candidateJSON, this);
+	public Form(FormAJSON formAJSON) {
+		BeanUtils.copyProperties(formAJSON, this);
+	}
+
+	public Form(FormBJSON formBJSON) {
+		BeanUtils.copyProperties(formBJSON, this);
 	}
 
 	private int formNum;
 	private Date dateCreated;
-
+	private Date dateSubmitted;
 	// Many to One
 	private FormStatus formStatus;
 
@@ -195,6 +203,8 @@ public class Form {
 	// Many to one
 	private SelectionDecision selectionDecision;
 
+	private MaritalStatus maritalStatus;
+	
 	private int candidateBranchAttendance;
 	private int candidateBranchAttendanceTotal;
 	private String candidateSevaDetails;
@@ -207,7 +217,8 @@ public class Form {
 	private String candidateSecretaryName;
 	private String candidateSecretaryEmail;
 	private String candidateSecretaryMobile;
-
+	private String candidateSecretaryRemarks;
+	
 	private int fathersBranchAttendance;
 	private int fathersBranchAttendanceTotal;
 	private String fathersSevaDetails;
@@ -230,6 +241,7 @@ public class Form {
 	private String parentsSecretaryName;
 	private String parentsSecretaryEmail;
 	private String parentsSecretaryMobile;
+	private String parentsSecretaryRemarks;
 
 	private List<Sibling> siblings;
 
@@ -250,6 +262,15 @@ public class Form {
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getDateSubmitted() {
+		return dateSubmitted;
+	}
+
+	public void setDateSubmitted(Date dateSubmitted) {
+		this.dateSubmitted = dateSubmitted;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -1042,6 +1063,17 @@ public class Form {
 		this.selectionDecision = selectionDecision;
 	}
 
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "maritalStatus")
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
 	public int getCandidateBranchAttendance() {
 		return candidateBranchAttendance;
 	}
@@ -1125,6 +1157,14 @@ public class Form {
 
 	public void setCandidateSecretaryMobile(String candidateSecretaryMobile) {
 		this.candidateSecretaryMobile = candidateSecretaryMobile;
+	}
+
+	public String getCandidateSecretaryRemarks() {
+		return candidateSecretaryRemarks;
+	}
+
+	public void setCandidateSecretaryRemarks(String candidateSecretaryRemarks) {
+		this.candidateSecretaryRemarks = candidateSecretaryRemarks;
 	}
 
 	public int getFathersBranchAttendance() {
@@ -1244,6 +1284,14 @@ public class Form {
 		this.parentsSecretaryMobile = parentsSecretaryMobile;
 	}
 
+	public String getParentsSecretaryRemarks() {
+		return parentsSecretaryRemarks;
+	}
+
+	public void setParentsSecretaryRemarks(String parentsSecretaryRemarks) {
+		this.parentsSecretaryRemarks = parentsSecretaryRemarks;
+	}
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "form")
 	public List<Sibling> getSiblings() {
 		return siblings;
@@ -1302,6 +1350,18 @@ public class Form {
 		form.setSiblings(siblings);
 		logger.info("Number of Siblings: " + siblings.size());
 		return form;
+	}
+	
+	@Override
+	public String toString() {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return super.toString();
 	}
 
 }

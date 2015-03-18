@@ -3,16 +3,18 @@
  */
 package org.db.mp.json;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
+import org.db.mp.model.ApprovalStatus;
+import org.db.mp.model.BloodGroup;
 import org.db.mp.model.Branch;
 import org.db.mp.model.Country;
 import org.db.mp.model.Form;
 import org.db.mp.model.FormStatus;
+import org.db.mp.model.MaritalStatus;
 import org.db.mp.model.Occupation;
+import org.db.mp.model.SelectionDecision;
 import org.db.mp.model.Sibling;
 import org.springframework.beans.BeanUtils;
 
@@ -20,19 +22,18 @@ import org.springframework.beans.BeanUtils;
  * @author Satyam Sharan <satyam.sharan@hotmail.com>
  *
  */
-public class CandidateJSON {
+public class FormBJSON {
 
-	public CandidateJSON() {
+	public FormBJSON() {
 		super();
 	}
-	
-	public CandidateJSON(Form form) {
+	public FormBJSON(Form form) {
 		BeanUtils.copyProperties(form, this);
 	}
 
 	private int formNum;
-	private Date dateCreated=new Date();
-
+	private Date dateCreated;
+	
 	// Many to One
 	private FormStatus formStatus= new FormStatus();
 
@@ -147,6 +148,80 @@ public class CandidateJSON {
 	private Date parentsDateOfSignature;
 	private String parentsNameOfSignatory;
 
+	
+	private Date dateSubmitted;
+	
+	private String health;
+	private int height;
+	private int weight;
+
+	// Many to one
+	private BloodGroup bloodGroup;
+
+	private Date completionOfEducation;
+
+
+	private boolean paternalGrandFatherInitiated;
+	private String paternalGrandMothersName;
+	private boolean paternalGrandMotherInitiated;
+
+	// Many to one
+	private Occupation fathersOccupation;
+	private String fathersDesignation;
+	private String fathersDepartment;
+	private String fathersPlace;
+	
+	
+	private int fathersMonthlyIncome;
+	private String fathersAssetDetails;
+
+	private String fathersPlaceOfInitiation;
+	private Date fathersDateOfSecondInitiation;
+
+
+	private boolean maternalGrandFatherInitiated;
+	private String maternalGrandMothersName;
+	private boolean maternalGeandMotherInitiated;
+
+	// Many to one
+	private Occupation mothersOccupation;
+	private String mothersDesignation;
+	private String mothersDepartment;
+	private String mothersPlace;
+	private int mothersMonthlyIncome;
+	private String mothersAssetDetails;
+
+	private String mothersPlaceOfInitiation;
+	private Date mothersDateOfSecondInitiation;
+
+
+	private Date preferedSpouseDOB;
+	private String preferedSpouseQualification;
+	private String preferedSpouseOccupation;
+	private String preferedSpousePersonality;
+	private Date preferedTimeScheduleForMarriage;
+
+	// Many to one
+	private SelectionDecision selectionDecision;
+
+	private MaritalStatus maritalStatus;
+
+	private ApprovalStatus candidateSecretaryApproval;
+	private String candidateSecretaryName;
+	private String candidateSecretaryEmail;
+	private String candidateSecretaryMobile;
+
+	
+	// Many to one
+	private ApprovalStatus parentsSecretaryApproval;
+
+	private String parentsSecretaryName;
+	private String parentsSecretaryEmail;
+	private String parentsSecretaryMobile;
+
+	
+	
+	
 	public int getFormNum() {
 		return formNum;
 	}
@@ -706,48 +781,262 @@ public class CandidateJSON {
 	public void setParentsNameOfSignatory(String parentsNameOfSignatory) {
 		this.parentsNameOfSignatory = parentsNameOfSignatory;
 	}
-
-	public static CandidateJSON getRandomCandidate() {
-		int random = new Random().nextInt(1000);
-		CandidateJSON candidateJSON = new CandidateJSON();
-		candidateJSON.setDateCreated(new Date());
-		candidateJSON.setFormStatus(new FormStatus(random % 3 + 1));
-		candidateJSON.setName("Test Name: " + random);
-		candidateJSON.setDateOfBirth(new Date());
-		candidateJSON.setDateOfInitiation(new Date());
-		candidateJSON.setNationality(new Country());
-		candidateJSON.setEducationalQualification("Graduate");
-		candidateJSON.setOccupation(new Occupation(random % 5 + 1));
-		candidateJSON.setOfficeCountry(new Country());
-		candidateJSON.setCandidateBranch(new Branch(1));
-		candidateJSON.setParentsBranch(new Branch(1));
-		candidateJSON.setDateOfLastDBVisit(new Date());
-		candidateJSON.setFathersName("Father: " + random);
-		candidateJSON.setPaternalGrandFathersName("Paternal Grand Father: " + random);
-		candidateJSON.setFathersNationality(new Country());
-		candidateJSON.setFathersSatsangSevaDetails("Satsang and Seva Details: " + random);
-		candidateJSON.setFathersLastZonalAttended("Basnat 2015: " + random);
-		candidateJSON.setMothersName("Mother: " + random);
-		candidateJSON.setMaternalGrandFathersName("Maternal Grand Father: " + random);
-		candidateJSON.setMothersNationality(new Country());
-		candidateJSON.setMothersSatsangSevaDetails("Satsang and Seva Details: " + random);
-		candidateJSON.setMothersLastZonalAttended("Basnat 2015: " + random);
-
-		candidateJSON.setParentsBuildingNumber("Flat 207");
-		candidateJSON.setParentsStreet("Pocket 4, Sector 12");
-		candidateJSON.setParentsLocality("Dwarka");
-		candidateJSON.setParentsCity("New Delhi");
-		candidateJSON.setParentsDistrict("South West Delhi");
-		candidateJSON.setParentsState("Delhi");
-		candidateJSON.setParentsCountry(new Country());
-
-		List<Sibling> siblings = new ArrayList<Sibling>();
-
-		for (int i = 0; i < (2 + (new Random().nextInt(5))); i++) {
-			siblings.add(Sibling.getRandomSibling());
-		}
-
-		candidateJSON.setSiblings(siblings);
-		return candidateJSON;
+	public Date getDateSubmitted() {
+		return dateSubmitted;
+	}
+	public void setDateSubmitted(Date dateSubmitted) {
+		this.dateSubmitted = dateSubmitted;
+	}
+	public String getHealth() {
+		return health;
+	}
+	public void setHealth(String health) {
+		this.health = health;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public int getWeight() {
+		return weight;
+	}
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+	public BloodGroup getBloodGroup() {
+		return bloodGroup;
+	}
+	public void setBloodGroup(BloodGroup bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+	public Date getCompletionOfEducation() {
+		return completionOfEducation;
+	}
+	public void setCompletionOfEducation(Date completionOfEducation) {
+		this.completionOfEducation = completionOfEducation;
+	}
+	public boolean isPaternalGrandFatherInitiated() {
+		return paternalGrandFatherInitiated;
+	}
+	public void setPaternalGrandFatherInitiated(boolean paternalGrandFatherInitiated) {
+		this.paternalGrandFatherInitiated = paternalGrandFatherInitiated;
+	}
+	public String getPaternalGrandMothersName() {
+		return paternalGrandMothersName;
+	}
+	public void setPaternalGrandMothersName(String paternalGrandMothersName) {
+		this.paternalGrandMothersName = paternalGrandMothersName;
+	}
+	public boolean isPaternalGrandMotherInitiated() {
+		return paternalGrandMotherInitiated;
+	}
+	public void setPaternalGrandMotherInitiated(boolean paternalGrandMotherInitiated) {
+		this.paternalGrandMotherInitiated = paternalGrandMotherInitiated;
+	}
+	public Occupation getFathersOccupation() {
+		return fathersOccupation;
+	}
+	public void setFathersOccupation(Occupation fathersOccupation) {
+		this.fathersOccupation = fathersOccupation;
+	}
+	public String getFathersDesignation() {
+		return fathersDesignation;
+	}
+	public void setFathersDesignation(String fathersDesignation) {
+		this.fathersDesignation = fathersDesignation;
+	}
+	public String getFathersDepartment() {
+		return fathersDepartment;
+	}
+	public void setFathersDepartment(String fathersDepartment) {
+		this.fathersDepartment = fathersDepartment;
+	}
+	public String getFathersPlace() {
+		return fathersPlace;
+	}
+	public void setFathersPlace(String fathersPlace) {
+		this.fathersPlace = fathersPlace;
+	}
+	public int getFathersMonthlyIncome() {
+		return fathersMonthlyIncome;
+	}
+	public void setFathersMonthlyIncome(int fathersMonthlyIncome) {
+		this.fathersMonthlyIncome = fathersMonthlyIncome;
+	}
+	public String getFathersAssetDetails() {
+		return fathersAssetDetails;
+	}
+	public void setFathersAssetDetails(String fathersAssetDetails) {
+		this.fathersAssetDetails = fathersAssetDetails;
+	}
+	public String getFathersPlaceOfInitiation() {
+		return fathersPlaceOfInitiation;
+	}
+	public void setFathersPlaceOfInitiation(String fathersPlaceOfInitiation) {
+		this.fathersPlaceOfInitiation = fathersPlaceOfInitiation;
+	}
+	public Date getFathersDateOfSecondInitiation() {
+		return fathersDateOfSecondInitiation;
+	}
+	public void setFathersDateOfSecondInitiation(Date fathersDateOfSecondInitiation) {
+		this.fathersDateOfSecondInitiation = fathersDateOfSecondInitiation;
+	}
+	public boolean isMaternalGrandFatherInitiated() {
+		return maternalGrandFatherInitiated;
+	}
+	public void setMaternalGrandFatherInitiated(boolean maternalGrandFatherInitiated) {
+		this.maternalGrandFatherInitiated = maternalGrandFatherInitiated;
+	}
+	public String getMaternalGrandMothersName() {
+		return maternalGrandMothersName;
+	}
+	public void setMaternalGrandMothersName(String maternalGrandMothersName) {
+		this.maternalGrandMothersName = maternalGrandMothersName;
+	}
+	public boolean isMaternalGeandMotherInitiated() {
+		return maternalGeandMotherInitiated;
+	}
+	public void setMaternalGeandMotherInitiated(boolean maternalGeandMotherInitiated) {
+		this.maternalGeandMotherInitiated = maternalGeandMotherInitiated;
+	}
+	public Occupation getMothersOccupation() {
+		return mothersOccupation;
+	}
+	public void setMothersOccupation(Occupation mothersOccupation) {
+		this.mothersOccupation = mothersOccupation;
+	}
+	public String getMothersDesignation() {
+		return mothersDesignation;
+	}
+	public void setMothersDesignation(String mothersDesignation) {
+		this.mothersDesignation = mothersDesignation;
+	}
+	public String getMothersDepartment() {
+		return mothersDepartment;
+	}
+	public void setMothersDepartment(String mothersDepartment) {
+		this.mothersDepartment = mothersDepartment;
+	}
+	public String getMothersPlace() {
+		return mothersPlace;
+	}
+	public void setMothersPlace(String mothersPlace) {
+		this.mothersPlace = mothersPlace;
+	}
+	public int getMothersMonthlyIncome() {
+		return mothersMonthlyIncome;
+	}
+	public void setMothersMonthlyIncome(int mothersMonthlyIncome) {
+		this.mothersMonthlyIncome = mothersMonthlyIncome;
+	}
+	public String getMothersAssetDetails() {
+		return mothersAssetDetails;
+	}
+	public void setMothersAssetDetails(String mothersAssetDetails) {
+		this.mothersAssetDetails = mothersAssetDetails;
+	}
+	public String getMothersPlaceOfInitiation() {
+		return mothersPlaceOfInitiation;
+	}
+	public void setMothersPlaceOfInitiation(String mothersPlaceOfInitiation) {
+		this.mothersPlaceOfInitiation = mothersPlaceOfInitiation;
+	}
+	public Date getMothersDateOfSecondInitiation() {
+		return mothersDateOfSecondInitiation;
+	}
+	public void setMothersDateOfSecondInitiation(Date mothersDateOfSecondInitiation) {
+		this.mothersDateOfSecondInitiation = mothersDateOfSecondInitiation;
+	}
+	public Date getPreferedSpouseDOB() {
+		return preferedSpouseDOB;
+	}
+	public void setPreferedSpouseDOB(Date preferedSpouseDOB) {
+		this.preferedSpouseDOB = preferedSpouseDOB;
+	}
+	public String getPreferedSpouseQualification() {
+		return preferedSpouseQualification;
+	}
+	public void setPreferedSpouseQualification(String preferedSpouseQualification) {
+		this.preferedSpouseQualification = preferedSpouseQualification;
+	}
+	public String getPreferedSpouseOccupation() {
+		return preferedSpouseOccupation;
+	}
+	public void setPreferedSpouseOccupation(String preferedSpouseOccupation) {
+		this.preferedSpouseOccupation = preferedSpouseOccupation;
+	}
+	public String getPreferedSpousePersonality() {
+		return preferedSpousePersonality;
+	}
+	public void setPreferedSpousePersonality(String preferedSpousePersonality) {
+		this.preferedSpousePersonality = preferedSpousePersonality;
+	}
+	public Date getPreferedTimeScheduleForMarriage() {
+		return preferedTimeScheduleForMarriage;
+	}
+	public void setPreferedTimeScheduleForMarriage(Date preferedTimeScheduleForMarriage) {
+		this.preferedTimeScheduleForMarriage = preferedTimeScheduleForMarriage;
+	}
+	public SelectionDecision getSelectionDecision() {
+		return selectionDecision;
+	}
+	public void setSelectionDecision(SelectionDecision selectionDecision) {
+		this.selectionDecision = selectionDecision;
+	}
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+	public ApprovalStatus getCandidateSecretaryApproval() {
+		return candidateSecretaryApproval;
+	}
+	public void setCandidateSecretaryApproval(ApprovalStatus candidateSecretaryApproval) {
+		this.candidateSecretaryApproval = candidateSecretaryApproval;
+	}
+	public String getCandidateSecretaryName() {
+		return candidateSecretaryName;
+	}
+	public void setCandidateSecretaryName(String candidateSecretaryName) {
+		this.candidateSecretaryName = candidateSecretaryName;
+	}
+	public String getCandidateSecretaryEmail() {
+		return candidateSecretaryEmail;
+	}
+	public void setCandidateSecretaryEmail(String candidateSecretaryEmail) {
+		this.candidateSecretaryEmail = candidateSecretaryEmail;
+	}
+	public String getCandidateSecretaryMobile() {
+		return candidateSecretaryMobile;
+	}
+	public void setCandidateSecretaryMobile(String candidateSecretaryMobile) {
+		this.candidateSecretaryMobile = candidateSecretaryMobile;
+	}
+	public ApprovalStatus getParentsSecretaryApproval() {
+		return parentsSecretaryApproval;
+	}
+	public void setParentsSecretaryApproval(ApprovalStatus parentsSecretaryApproval) {
+		this.parentsSecretaryApproval = parentsSecretaryApproval;
+	}
+	public String getParentsSecretaryName() {
+		return parentsSecretaryName;
+	}
+	public void setParentsSecretaryName(String parentsSecretaryName) {
+		this.parentsSecretaryName = parentsSecretaryName;
+	}
+	public String getParentsSecretaryEmail() {
+		return parentsSecretaryEmail;
+	}
+	public void setParentsSecretaryEmail(String parentsSecretaryEmail) {
+		this.parentsSecretaryEmail = parentsSecretaryEmail;
+	}
+	public String getParentsSecretaryMobile() {
+		return parentsSecretaryMobile;
+	}
+	public void setParentsSecretaryMobile(String parentsSecretaryMobile) {
+		this.parentsSecretaryMobile = parentsSecretaryMobile;
 	}
 }

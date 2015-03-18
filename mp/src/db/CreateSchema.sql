@@ -53,6 +53,7 @@ create table BranchMaster(
 CREATE TABLE Form(	
 	formNum INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	dateCreated DATETIME NOT NULL,
+	dateSubmitted DATETIME,
 	formStatus INT NOT NULL,
 	
 	name VARCHAR(255) NOT NULL,
@@ -162,6 +163,7 @@ CREATE TABLE Form(
 	preferedSpousePersonality VARCHAR(255),
 	preferedTimeScheduleForMarriage DATETIME,
 	selectionDecision INT,
+	maritalStatus INT,
 	
 	candidateBranchAttendance INT,
 	candidateBranchAttendanceTotal INT,
@@ -175,6 +177,7 @@ CREATE TABLE Form(
 	candidateSecretaryName VARCHAR(255),
 	candidateSecretaryEmail VARCHAR(255),
 	candidateSecretaryMobile VARCHAR(50),
+	candidateSecretaryRemarks VARCHAR(1000),
 	
 	
 	fathersBranchAttendance INT,
@@ -195,6 +198,7 @@ CREATE TABLE Form(
 	parentsSecretaryName VARCHAR(255),
 	parentsSecretaryEmail VARCHAR(255),
 	parentsSecretaryMobile VARCHAR(50),
+	parentsSecretaryRemarks VARCHAR(1000),
 
 	FOREIGN KEY (formStatus) REFERENCES FormStatusMaster (`code`),
 	FOREIGN KEY (bloodGroup) REFERENCES BloodGroupMaster (`code`),
@@ -202,6 +206,7 @@ CREATE TABLE Form(
 	FOREIGN KEY (fathersOccupation) REFERENCES OccupationMaster (`code`),
 	FOREIGN KEY (mothersOccupation) REFERENCES OccupationMaster (`code`),
 	FOREIGN KEY (selectionDecision) REFERENCES SelectionDecisionMaster (`code`),
+	FOREIGN KEY (maritalStatus) REFERENCES MaritalStatusMaster (`code`),
 	
 	FOREIGN KEY (candidateSecretaryApproval) REFERENCES ApprovalStatusMaster (`code`),
 	FOREIGN KEY (parentsSecretaryApproval) REFERENCES ApprovalStatusMaster (`code`),
