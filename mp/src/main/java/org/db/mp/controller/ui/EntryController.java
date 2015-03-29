@@ -21,7 +21,7 @@ public class EntryController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
 		logger.info("Reached in the controller");
-		map.put("msg", "Hello Spring 4 Web MVC!");
+		//map.put("msg", "Hello Spring 4 Web MVC!");
 		return "index";
 	}
 }

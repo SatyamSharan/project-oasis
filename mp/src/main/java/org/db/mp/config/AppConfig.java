@@ -21,6 +21,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -33,8 +35,13 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @ComponentScan({"org.db.mp.controller.api","org.db.mp.controller.ui"})
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
-public class AppConfig {
+public class AppConfig extends WebMvcConfigurerAdapter{
 
+	@Override
+	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+	    registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
+	}
+	
 	@Autowired
 	private Environment env;
 
