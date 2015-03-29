@@ -126,7 +126,7 @@ CREATE TABLE Form(
 	maternalGrandFathersName VARCHAR(255) NOT NULL,
 	maternalGrandFatherInitiated CHAR(1),
 	maternalGrandMothersName VARCHAR(255),
-	maternalGeandMotherInitiated CHAR(1),
+	maternalGrandMotherInitiated CHAR(1),
 	mothersOccupation INT,
 	mothersDesignation VARCHAR(255),
 	mothersDepartment VARCHAR(255),

@@ -157,7 +157,7 @@ public class Form {
 	private String maternalGrandMothersName;
 
 	// Many to one
-	private boolean maternalGeandMotherInitiated;
+	private boolean maternalGrandMotherInitiated;
 
 	// Many to one
 	private Occupation mothersOccupation;
@@ -794,12 +794,12 @@ public class Form {
 	}
 
 	@Type(type = "yes_no")
-	public boolean isMaternalGeandMotherInitiated() {
-		return maternalGeandMotherInitiated;
+	public boolean isMaternalGrandMotherInitiated() {
+		return maternalGrandMotherInitiated;
 	}
 
-	public void setMaternalGeandMotherInitiated(boolean maternalGeandMotherInitiated) {
-		this.maternalGeandMotherInitiated = maternalGeandMotherInitiated;
+	public void setMaternalGrandMotherInitiated(boolean maternalGrandMotherInitiated) {
+		this.maternalGrandMotherInitiated = maternalGrandMotherInitiated;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -1358,7 +1358,6 @@ public class Form {
 		try {
 			return mapper.writeValueAsString(this);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return super.toString();

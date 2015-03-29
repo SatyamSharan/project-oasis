@@ -181,7 +181,7 @@ public class FormBJSON {
 
 	private boolean maternalGrandFatherInitiated;
 	private String maternalGrandMothersName;
-	private boolean maternalGeandMotherInitiated;
+	private boolean maternalGrandMotherInitiated;
 
 	// Many to one
 	private Occupation mothersOccupation;
@@ -895,11 +895,11 @@ public class FormBJSON {
 	public void setMaternalGrandMothersName(String maternalGrandMothersName) {
 		this.maternalGrandMothersName = maternalGrandMothersName;
 	}
-	public boolean isMaternalGeandMotherInitiated() {
-		return maternalGeandMotherInitiated;
+	public boolean isMaternalGrandMotherInitiated() {
+		return maternalGrandMotherInitiated;
 	}
-	public void setMaternalGeandMotherInitiated(boolean maternalGeandMotherInitiated) {
-		this.maternalGeandMotherInitiated = maternalGeandMotherInitiated;
+	public void setMaternalGrandMotherInitiated(boolean maternalGrandMotherInitiated) {
+		this.maternalGrandMotherInitiated = maternalGrandMotherInitiated;
 	}
 	public Occupation getMothersOccupation() {
 		return mothersOccupation;
